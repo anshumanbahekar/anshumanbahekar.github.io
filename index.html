@@ -12,6 +12,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
 
+a{text-decoration: none;}
+
+article {
+  background: linear-gradient(
+    to right, 
+    rgb(252, 61, 255), 
+    hsl(204 100% 59%)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 html, body {
   height: 100%;
 }
@@ -20,73 +32,6 @@ html, body {
   height: 100%;
   display: flex;
   justify-content: center;
-}
-
-.button_wrap {
-  min-width: 300px;
-  min-height: 60px;
-  font-family: 'Nunito', sans-serif;
-  font-size: 22px;
-  text-transform: uppercase;
-  letter-spacing: 1.3px;
-  font-weight: 700;
-  color: #313133;
-  background: #4FD1C5;
-background: linear-gradient(90deg, rgba(129,230,217,1) 0%, rgba(79,209,197,1) 100%);
-  border: none;
-  border-radius: 1000px;
-  box-shadow: 12px 12px 24px rgba(79,209,197,.64);
-  transition: all 0.3s ease-in-out 0s;
-  cursor: pointer;
-  outline: none;
-  position: relative;
-  padding: 10px;
-  }
-
-  .button_wrap::before {
-content: '';
-  border-radius: 1000px;
-  min-width: calc(300px + 12px);
-  min-height: calc(60px + 12px);
-  border: 6px solid #00FFCB;
-  box-shadow: 0 0 60px rgba(0,255,203,.64);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  transition: all .3s ease-in-out 0s;
-}
-
-.button_wrap:hover, .button:focus {
-  color: #313133;
-  transform: translateY(-6px);
-}
-
-.button_wrap:hover::before, .button_wrap:focus::before {
-  opacity: 1;
-}
-
-.txt_eb{
-  text-decoration: none;
-}
-
-.button_wrap::after {
-  content: '';
-  width: 30px; height: 30px;
-  border-radius: 100%;
-  border: 6px solid #00FFCB;
-  position: absolute;
-  z-index: -1;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  animation: ring 1.5s infinite;
-}
-
-.button_wrap:hover::after, .button_wrap:focus::after {
-  animation: none;
-  display: none;
 }
 
 @keyframes ring {
@@ -105,107 +50,71 @@ content: '';
     h1,h2,h3,h4,h5,h6 {font-family: "Oswald"}
     body {font-family: "Open Sans"}
 
-    .glow {
-  font-size: 40px;
-  color: #fff;
-  animation: glow 1s ease-in-out infinite alternate;
-}
-
-@-webkit-keyframes glow {
-  from {
-    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
-  }
-  
-  to {
-    text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
-  }
-}
-
-.glow-on-hover {
-    width: 220px;
-    height: 50px;
-    border: none;
-    outline: none;
-    color: #fff;
-    background: #111;
-    cursor: pointer;
-    position: relative;
-    z-index: 0;
-    border-radius: 10px;
-}
-
-.glow-on-hover:before {
-    content: '';
-    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
-    position: absolute;
-    top: -2px;
-    left:-2px;
-    background-size: 400%;
-    z-index: -1;
-    filter: blur(5px);
-    width: calc(100% + 4px);
-    height: calc(100% + 4px);
-    animation: glowing 20s linear infinite;
-    opacity: 0;
-    transition: opacity .3s ease-in-out;
-    border-radius: 10px;
-}
-
-.glow-on-hover:active {
-    color: #000
-}
-
-.glow-on-hover:active:after {
-    background: transparent;
-}
-
-.glow-on-hover:hover:before {
-    opacity: 1;
-}
-
-.glow-on-hover:after {
-    z-index: -1;
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #111;
-    left: 0;
-    top: 0;
-    border-radius: 10px;
-}
-
-@keyframes glowing {
-    0% { background-position: 0 0; }
-    50% { background-position: 400% 0; }
-    100% { background-position: 0 0; }
-}
-
-.txt_seenow{
+.bn3 {
+  display: inline-block;
+  padding: 0.5em 1.7em;
+  margin: 0 0.1em 0.1em 0;
+  border: 0.16em solid rgb(255, 255, 255);
+  border-radius: 2em;
+  box-sizing: border-box;
   text-decoration: none;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  color: #ffffff;
+  text-shadow: 0 0.04em 0.04em rgba(255, 255, 255, 0.253);
+  text-align: center;
+  transition: all 0.2s;
 }
 
-.glow2 {
-  font-size: 40px;
+.bn3:hover {
+  color: rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255);
+}
+
+.bn632-hover {
+  width: 160px;
+  font-size: 16px;
+  font-weight: 600;
   color: #fff;
-  -webkit-animation: glow2 1s ease-in-out infinite alternate;
-  -moz-animation: glow2 1s ease-in-out infinite alternate;
-  animation: glow2 1s ease-in-out infinite alternate;
+  cursor: pointer;
+  margin: 20px;
+  height: 55px;
+  text-align: center;
+  border: none;
+  background-size: 300% 100%;
+  border-radius: 50px;
+  -o-transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
 }
 
-@-webkit-keyframes glow2 {
-  from {
-    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #009de6, 0 0 40px #009de6, 0 0 50px #009de6, 0 0 60px #009de6, 0 0 70px #009de6;
-  }
-  to {
-    text-shadow: 0 0 20px #fff, 0 0 30px #a5e3ff, 0 0 40px #0070a3, 0 0 50px #a5e2ff, 0 0 60px #72d2ff, 0 0 70px #33beff, 0 0 80px #009de6;
-  }
+.bn632-hover:hover {
+  background-position: 100% 0;
+  moz-transition: all .4s ease-in-out;
+  -o-transition: all .4s ease-in-out;
+  -webkit-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
 }
+
+.bn632-hover:focus {
+  outline: none;
+}
+
+.bn632-hover.bn24 {
+  background-image: linear-gradient(
+      to right,
+      #6253e1,
+      #852d91,
+      #a3a1ff,
+      #f24645
+    );
+  box-shadow: 0 4px 15px 0 rgba(126, 52, 161, 0.75);
+}
+
     </style>
   </head>
 <body class="w3-grey">
 
-<!-- Navigation bar with social media icons -->
 <div class="w3-bar w3-black w3-hide-small">
   <a href="https://www.youtube.com/channel/UCJZ83gzcryT0GJs6O8KrhGA" target="_blank" class="w3-bar-item w3-button"><i class="fa fa-youtube"></i></a>
   <a href="https://www.snapchat.com/add/anshuman_bahe14" target="_blank" class="w3-bar-item w3-button"><i class="fa fa-snapchat"></i></a>
@@ -213,80 +122,126 @@ content: '';
   <a href="https://twitter.com/CodeAnshuman" target="_blank" class="w3-bar-item w3-button"><i class="fa fa-twitter"></i></a>
   <a href="https://twitter.com/CodeAnshuman" target="_blank" class="w3-bar-item w3-button"><i class="fa fa-github"></i></a>
 </div>
-  
-<!-- w3-content defines a container for fixed size centered content, 
-and is wrapped around the whole page content, except for the footer in this example -->
+
 <div class="w3-content" style="max-width:1600px">
 
-  <!-- Header -->
   <header class="w3-container w3-center w3-padding-48 w3-white">
     <h1 class="w3-xxxlarge"><b>Code with Anshuman</b></h1>
-    <h6>Welcome to <span class="w3-tag">Anshuman's Website</span></h6>
+    <h6>Welcome to <span class="w3-tag">CWA</span></h6>
   </header>
 
-  <!-- Image header -->
   <header class="w3-display-container w3-wide" id="home">
     <img class="w3-image" src="https://cdn.discordapp.com/attachments/1014552955657146459/1040709723525226567/Motivational_Talks.png" alt="Fashion Blog" width="1600" height="1060">
     <div class="w3-display-left w3-padding-large">
       
-      
     </div>
   </header>
 
-  <!-- Grid -->
   <div class="w3-row w3-padding w3-border">
 
-    <!-- Blog entries -->
     <div class="w3-col l8 s12">
-    
-      <!-- Blog entry -->
+
       <div class="w3-container w3-white w3-margin w3-padding-large">
         <div class="w3-center">
-          <h3>Making a Discord Bot 🤖</h3>
+          <h3>Part 1 | Python Tutorial | Make your own Snake Game Using Python 🐍</h3>
           
         </div>
 
         <div class="w3-justify">
-          <iframe style="width:100%" height="500px" src="https://www.youtube.com/embed/posoeHC6wIE"> </iframe>
-          <p><strong>Description - </strong> Don't know how to create Discord Bot 🤖, we have a solution. Watch this Video, which is Explained Clearly. In this video we have created a Discord bot and then connected to a Discord SERVER. If you also don't know how to create a Discord Server, it's also Given 👆. This was the Part-1, next part is given below 👇 </p>
-          
+          <iframe style="width:100%" height="500px" src="https://www.youtube.com/embed/nLQ2lzFZZf4"> </iframe>
           
         </div>
       </div>
-      <hr>
 
-      <!-- Blog entry -->
       <div class="w3-container w3-white w3-margin w3-padding-large">
         <div class="w3-center">
-          <h3>How to Code a Discord Bot 🤖 with Python 🐍</h3>
+          <h3>Part 2 | Python Tutorial | Calculator app for Beginners Using Python 🐍</h3>
         </div>
 
         <div class="w3-justify">
-          <iframe style="width:100%" height="500px" src="https://www.youtube.com/embed/Agz0F5gzOL0"> </iframe>
-          <p><strong>Description - </strong> In this Video we have coded a  Discord Bot🤖 with Python🐍, which was so simple 😄 to do. We have learn how to send Simple Text with the help of our Bot. In another part, we will see how to send Embed messages 💜</p>
+          <iframe style="width:100%" height="500px" src="https://www.youtube.com/embed/LFzAl10Riho"> </iframe>
           
         </div>
       </div>
 
-      <!-- Blog entry -->
       <div class="w3-container w3-white w3-margin w3-padding-large">
         <div class="w3-center">
-          <h3>Discord Part - 3 | How to Send Embed Messages By the Discord Bot using Python 🐍 | #DiscordTutorial 🚀</h3>
+          <h3>Part 3 | Python Tutorial | How to Create Vritual Friend using Python 🐍</h3>
         </div>
 
         <div class="w3-justify">
-          <iframe style="width:100%" height="500px" src="https://www.youtube.com/embed/hBSinylxLj8"> </iframe>
-          <p><strong>Description - </strong>In this Video we have learn how to send 📩 embed messages 🙂 by Discord 🚀 Bot 🤖 with the help ✋ of Python 🐍. Want to see more Videos 📹, then click on the Youtube Icon 💙 located at the navigation Bar</p>
+          <iframe style="width:100%" height="500px" src="https://www.youtube.com/embed/yU7rpmvu8qc"> </iframe>
           
         </div>
       </div>
-      
-    <!-- END BLOG ENTRIES -->
+
+      <div class="w3-container w3-white w3-margin w3-padding-large">
+        <div class="w3-center">
+          <h3>Part 1 | Javascript 🧠 Tutorial | How to Create Fucntions{}</h3>
+        </div>
+
+        <div class="w3-justify">
+          <iframe style="width:100%" height="500px" src="https://www.youtube.com/embed/hQgOI3jxf1I"> </iframe>
+          
+        </div>
+      </div>
+
     </div>
 
-    <!-- About/Information menu -->
     <div class="w3-col l4">
-      <!-- About Card -->
+
+      <div class="w3-white w3-margin">
+        <div class="w3-container w3-padding w3-black">
+          <h4>Events</h4>
+        </div>
+        <div class="w3-container w3-white">
+          <div class="w3-container w3-display-container w3-black w3-section" style="height:100%">
+<article>
+            <h1 class="glow">Want to Know the upcoming Events</h1>
+          </article>
+            <br>
+            <a href="https://codewithanshu.github.io/events.github.io/" class="bn3">See Now</a>
+            <br>
+            <br>
+          </div>
+        </div>
+      </div>
+
+      <div class="w3-white w3-margin">
+        <div class="w3-container w3-padding w3-black">
+          <h4>Blogs</h4>
+        </div>
+        <div class="w3-container w3-white">
+          <div class="w3-container w3-display-container w3-black w3-section" style="height:100%">
+<article>
+            <h1>Be updated with our Blogs and Explore it</h1>
+</article>
+            <br>
+            <a href="https://codewithanshu.github.io/blog.github.io/" class="bn3">Explore</a>
+        <br>
+        <br>
+          </div>
+        </div>
+      </div>
+
+      <div class="w3-white w3-margin">
+        <div class="w3-container w3-padding w3-black">
+          <h4>About me</h4>
+        </div>
+        <div class="w3-row-padding w3-white">
+          <div class="w3-col s6">
+            <p><img src="https://cdn.discordapp.com/attachments/1014552955657146459/1040995935532089477/14.jpeg" alt="Jeans" style="width:100%"></p>
+          </div>
+          <div class="w3-col s6">
+            <h3>13 y/o | Founder & CEO of CB | Python🐍, Java📱, Web Developement🔍, Machine Learning🤖| CB Website → bhaiyacoding.github.io</h3>
+            <a href="https://codewithanshu.github.io/about.github.io/"><button class="bn632-hover bn24">More</button></a>
+            <br>
+            <br>
+         </div>
+        </div>
+      </div>
+
+
       <div class="w3-white w3-margin">
         <img src="https://cdn.discordapp.com/attachments/1014552955657146459/1040713698387431454/12.jpeg" alt="Jane" style="width:100%">
         <div class="w3-container w3-black">
@@ -300,171 +255,23 @@ and is wrapped around the whole page content, except for the footer in this exam
             </p>Aana Zaroor ❤️</p>
         </div>
       </div>
-      <hr>
-
-      <!-- Posts -->
-      <div class="w3-white w3-margin">
-        <div class="w3-container w3-padding w3-black">
-          <h4>Social Media Handles</h4>
-        </div>
-        <ul class="w3-ul w3-hoverable w3-white">
-          <li class="w3-padding-16">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Twitter-logo.svg/1200px-Twitter-logo.svg.png" alt="Image" class="w3-left w3-margin-right" style="width:50px">
-            <span class="w3-large">Twitter</span>
-            <br>
-            <span><a href="https://twitter.com/CodeAnshuman" target="_blank">CodeAnshuman</a></span>
-          </li>
-          <li class="w3-padding-16">
-            <img src="https://pbs.twimg.com/profile_images/1414990564408262661/r6YemvF9_400x400.jpg" alt="Image" class="w3-left w3-margin-right" style="width:50px">
-            <span class="w3-large">Github</span>
-            <br>
-            <span><a href="https://github.com/codewithanshu" target="_blank">codewithanshu</a></span>
-          </li>
-          <li class="w3-padding-16">
-            <img src="https://play-lh.googleusercontent.com/kMofEFLjobZy_bCuaiDogzBcUT-dz3BBbOrIEjJ-hqOabjK8ieuevGe6wlTD15QzOqw" alt="Image" class="w3-left w3-margin-right" style="width:50px">
-            <span class="w3-large">Linkedin</span>
-            <br>
-            <span><a href="https://www.linkedin.com/in/code-with-anshuman-612962256/" target="_blank">CodewithAnshuman</a></span>
-          </li>
-          <li class="w3-padding-16">
-            <img src="https://yt3.ggpht.com/584JjRp5QMuKbyduM_2k5RlXFqHJtQ0qLIPZpwbUjMJmgzZngHcam5JMuZQxyzGMV5ljwJRl0Q=s900-c-k-c0x00ffffff-no-rj" alt="Image" class="w3-left w3-margin-right w3-sepia" style="width:50px">
-            <span class="w3-large">Youtube</span>
-            <br>
-            <span><a href="https://www.youtube.com/channel/UCJZ83gzcryT0GJs6O8KrhGA" target="_blank">Code with Anshuman</a></span>
-          </li>
-          <li class="w3-padding-16">
-            <img src="https://app.snapchat.com/web/deeplink/snapcode?username=codewithanshu&type=SVG&bitmoji=enable" alt="Image" class="w3-left w3-margin-right w3-sepia" style="width:50px">
-            <span class="w3-large">Snapchat</span>
-            <br>
-            <span><a href="https://www.snapchat.com/add/codewithanshu" target="_blank">codeanshu</a></span>
-          </li>
-          <br>
-          <button class="glow-on-hover w3-padding-16" type="button"><a href="https://codewithanshu.github.io/socialmedia.github.io/"  target="_blank" class="txt_seenow">See now 🔔</a></button>
-        <br>
-        <br>
-        </ul>
-      </div>
-      <hr>
-
-      <!-- Advertising -->
-      <div class="w3-white w3-margin">
-        <div class="w3-container w3-padding w3-black">
-          <h4>Events 💛</h4>
-        </div>
-        <div class="w3-container w3-white">
-          <div class="w3-container w3-display-container w3-black w3-section" style="height:100%">
-
-            <h1 class="glow">Want to Know the upcoming Events</h1>
-
-            <br>
-
-            
-            <button class="glow-on-hover" type="button"><a href="https://codewithanshu.github.io/events.github.io/"  target="_blank" class="txt_seenow">See now 🔔</a></button>
-            <br>
-            <br>
-          </div>
-        </div>
-      </div>
-      <hr>
-
-      <!-- Tags -->
-      <div class="w3-white w3-margin">
-        <div class="w3-container w3-padding w3-black">
-          <h4>Blogs💜</h4>
-        </div>
-        <div class="w3-container w3-white">
-          <div class="w3-container w3-display-container w3-black w3-section" style="height:100%">
-
-            <h1 class="glow2">Be updated with our Blogs and Explore it</h1>
-
-            <br>
-
-            
-            <button class="glow-on-hover" type="button"><a href="https://codewithanshu.github.io/blog.github.io/"  target="_blank" class="txt_seenow">Explore 💚</a></button>
-        <br>
-        <br>
-          </div>
-        </div>
-      </div>
-      <hr>
-
-      <!-- Inspiration -->
-      <div class="w3-white w3-margin">
-        <div class="w3-container w3-padding w3-black">
-          <h4>Know More about me</h4>
-        </div>
-        <div class="w3-row-padding w3-white">
-          <div class="w3-col s6">
-            <p><img src="https://cdn.discordapp.com/attachments/1014552955657146459/1040995935532089477/14.jpeg" alt="Jeans" style="width:100%"></p>
-          </div>
-          <div class="w3-col s6">
-            <h3>13 y/o | Founder & CEO of Coding Bhaiya | Python 🐍, Java 📱, Web Developement 🔍, Machine Learning 🤖 | CB Website → bhaiyacoding.github.io</h3>
-            <button class="glow-on-hover" type="button"><a href="https://codewithanshu.github.io/about.github.io/"  target="_blank" class="txt_seenow">About Us 🧡</a></button>
-            <br>
-            <br>
-         </div>
-         
-        </div>
-      </div>
-      <hr>
 
       <div class="w3-white w3-margin">
-        <div class="w3-container w3-padding w3-black">
-          <h4>Follow Me</h4>
-        </div>
-        <div class="w3-container w3-xlarge w3-padding">
-          <i class="fa fa-youtube w3-hover-opacity"></i>
-          <i class="fa fa-snapchat w3-hover-opacity"></i>
-          <i class="fa fa-linkedin w3-hover-opacity"></i>
-          <i class="fa fa-twitter w3-hover-opacity"></i>
-          <i class="fa fa-github w3-hover-opacity"></i>
-
-          <br>
-          
-
-          <button class="glow-on-hover" type="button"><a href="https://codewithanshu.github.io/socialmedia.github.io/"  target="_blank" class="txt_seenow">More</a></button>
+        <img src="https://cdn.discordapp.com/attachments/1014552955657146459/1041096082383454309/Screenshot_2022-11-13_023254.png" alt="Jane" style="width:100%">
+        <div class="w3-container w3-black">
+          <h4>News 📰</h4>
+          <p>GitHub Moves to Guard Open Source Against Supply Chain Attacks ⚠️.
+            The popular Microsoft-owned code repository plans to roll out code signing, which will help beef up the security of open source projects.</p>
         </div>
       </div>
-      <hr>
-      
-      
 
-    <!-- END About/Intro Menu -->
     </div>
-
-  <!-- END GRID -->
   </div>
-
-<!-- END w3-content -->
 </div>
-
-
-
-<!-- Footer. This section contains an ad for W3Schools Spaces. You can leave it to support us. -->
 <footer class="w3-container w3-dark-grey" style="padding:32px">
   <a href="#" class="w3-button w3-black w3-padding-large w3-margin-bottom"><i class="fa fa-arrow-up w3-margin-right"></i>To the top</a>
  <p class="w3-small"><a href="https://www.youtube.com/channel/UCJZ83gzcryT0GJs6O8KrhGA" target="_blank">Code with Anshuman</a></p>
- 
- <!-- End footer. -->
  </footer>
-
-<script>
-// Toggle between hiding and showing blog replies/comments
-document.getElementById("myBtn").click();
-function myFunction(id) {
-  var x = document.getElementById(id);
-  if (x.className.indexOf("w3-show") == -1) {
-    x.className += " w3-show";
-  } else { 
-    x.className = x.className.replace(" w3-show", "");
-  }
-}
-
-function likeFunction(x) {
-  x.style.fontWeight = "bold";
-  x.innerHTML = "✓ Liked";
-}
-</script>
 
 </body>
 </html>
