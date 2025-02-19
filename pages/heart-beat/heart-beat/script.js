@@ -1,3 +1,0 @@
-// BEST VIEWED IN FULL-SCREEN ON CHROME / SAFARI 
-
-// Free from JS
