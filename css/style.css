@@ -1291,3 +1291,16 @@ input[type="text"] {
 }
 
 /*# sourceMappingURL=style.css.map */
+.centersign {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 30%;
+}
+
+.centershinybtn {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 10%;
+}
