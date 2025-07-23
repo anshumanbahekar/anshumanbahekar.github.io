@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Support Me ❤️</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #ffe9e3, #ffeabf);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    .card {
+      background: white;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      color: #ff6b6b;
+    }
+
+    p.description {
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    img.qr {
+      width: 220px;
+      border-radius: 12px;
+      margin: 1rem 0;
+      border: 2px dashed #f8c291;
+      padding: 8px;
+      background: #fffefb;
+    }
+
+    .upi-id {
+      font-size: 1rem;
+      margin: 0.8rem 0;
+      background: #f2f2f2;
+      padding: 8px 12px;
+      border-radius: 8px;
+      display: inline-block;
+    }
+
+    a.button {
+      display: inline-block;
+      background: #4CAF50;
+      color: white;
+      text-decoration: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 10px 0;
+      transition: background 0.3s;
+    }
+
+    a.button:hover {
+      background: #388e3c;
+    }
+
+    .form-link {
+      margin-top: 20px;
+      display: inline-block;
+      font-size: 0.95rem;
+      color: #ff6b6b;
+      text-decoration: underline;
+    }
+
+    footer {
+      margin-top: 2rem;
+      font-size: 0.8rem;
+      color: #888;
+    }
+
+    @media screen and (max-width: 480px) {
+      h1 {
+        font-size: 1.6rem;
+      }
+
+      img.qr {
+        width: 180px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Buy Me a Chai ☕</h1>
+    <p class="description">If you enjoy my work, support me by sending a small tip using UPI ❤️</p>
+
+    <img src="assets/upi-qr.png" alt="UPI QR Code" class="qr" />
+    
+    <div class="upi-id">yourupi@upi</div>
+
+    <a href="upi://pay?pa=yourupi@upi&pn=Your Name&cu=INR" class="button" target="_blank">
+      Pay via Google Pay / PhonePe / BHIM
+    </a>
+
+    <br />
+    <a href="https://forms.gle/your-google-form" class="form-link" target="_blank">
+      💌 Leave a message after donating
+    </a>
+
+    <footer>Thank you for your love and support 🌸</footer>
+  </div>
+</body>
+</html>
