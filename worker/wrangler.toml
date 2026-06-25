@@ -1,0 +1,10 @@
+name = "anshuman-github-proxy"
+main = "index.js"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+GH_USER = "anshumanbahekar"
+
+# Token is set via: wrangler secret put GITHUB_TOKEN
+# Never put the actual token in this file
