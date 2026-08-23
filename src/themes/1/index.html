@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<link rel="icon" type="image/png" href="../../../assets/icon.png">
+<link rel="icon" type="image/png" href="../../assets/icon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Anshu's Lofi Den</title>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Nunito:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -1989,51 +1989,93 @@ window.addEventListener('scroll', ()=>{
    TRACKS & PLAYER
 ═══════════════════════════════════════ */
 const tracks = [
-  {name:'Rainy Window Study',    artist:"Anshu's Mix · Mellow",   dur:222, src:'../../../assets/rainy-window-study.mp3'},
-  {name:'Golden Hour Notebook',  artist:'Warm Afternoon Vibes',    dur:238, src:'../../../assets/golden-hour-notebook.mp3'},
-  {name:'Cityscape Daydream',    artist:'Jazz-Hop · Smooth',       dur:302, src:'../../../assets/cityscape-daydream.mp3'},
-  {name:'Ivory Keys at 2am',     artist:'Piano Lofi · Deep Focus', dur:269, src:'../../../assets/ivory-keys-at-2am.mp3'},
-  {name:'Monsoon Study Session', artist:'Rain + Beats · Cozy',     dur:373, src:'../../../assets/moonsoon-study-session.mp3'},
-  {name:'Birds & Morning',       artist:'Ambient · Dawn',          dur:240, src:'../../../assets/birds-chirpping.mp3'},
+  {name:'Rainy Window Study',    artist:"Anshu's Mix · Mellow",   dur:222, src:'../../assets/rainy-window-study.mp3'},
+  {name:'Golden Hour Notebook',  artist:'Warm Afternoon Vibes',    dur:238, src:'../../assets/golden-hour-notebook.mp3'},
+  {name:'Cityscape Daydream',    artist:'Jazz-Hop · Smooth',       dur:302, src:'../../assets/cityscape-daydream.mp3'},
+  {name:'Ivory Keys at 2am',     artist:'Piano Lofi · Deep Focus', dur:269, src:'../../assets/ivory-keys-at-2am.mp3'},
+  {name:'Monsoon Study Session', artist:'Rain + Beats · Cozy',     dur:373, src:'../../assets/moonsoon-study-session.mp3'},
+  {name:'Birds & Morning',       artist:'Ambient · Dawn',          dur:240, src:'../../assets/birds-chirpping.mp3'},
 ];
 const audioEl = new Audio();
 audioEl.volume = 0.75;
 
-/* ── BACKGROUND AMBIENT LOOP: song1 → song2 → song1 → ... ── */
-const bgTracks = ['../../../assets/song1.mp3', '../../../assets/song2.mp3'];
-let bgIdx = 0;
+/* ── BACKGROUND AMBIENT LOOP — cross-theme persistent ── */
+// Song URLs relative to this theme's location
+const bgTracks = ['../../assets/song1.mp3', '../../assets/song2.mp3'];
+const BG_KEY = 'bgMusicState'; // shared localStorage key across all themes
 let bgStarted = false;
 const bgAudio = new Audio();
 bgAudio.volume = 0.22;
 
-function bgNext() {
-  bgAudio.src = bgTracks[bgIdx % bgTracks.length];
-  bgAudio.play().catch(() => {});
-  bgIdx++;
+// Save state to localStorage every second so other themes can resume
+function bgSaveState() {
+  localStorage.setItem(BG_KEY, JSON.stringify({
+    idx:  bgAudio._trackIdx || 0,
+    time: bgAudio.currentTime,
+    ts:   Date.now()
+  }));
 }
-bgAudio.addEventListener('ended', bgNext);
+setInterval(bgSaveState, 1000);
 
-/* Start bg music on first click/touch (browser autoplay policy) */
+// Save before page unloads (theme switch)
+window.addEventListener('pagehide', bgSaveState);
+window.addEventListener('beforeunload', bgSaveState);
+
+function bgPlay(trackIdx, fromTime) {
+  bgAudio._trackIdx = trackIdx;
+  bgAudio.src = bgTracks[trackIdx % bgTracks.length];
+  bgAudio.currentTime = fromTime || 0;
+  bgAudio.play().catch(() => {});
+}
+
+bgAudio.addEventListener('ended', () => {
+  const next = ((bgAudio._trackIdx || 0) + 1) % bgTracks.length;
+  bgPlay(next, 0);
+});
+
 function startBg() {
   if (bgStarted) return;
   bgStarted = true;
-  bgNext();
-  document.removeEventListener('click',  startBg);
-  document.removeEventListener('touchstart', startBg);
+
+  // Try to resume from where another theme left off
+  try {
+    const saved = JSON.parse(localStorage.getItem(BG_KEY) || 'null');
+    if (saved) {
+      // Account for time elapsed while page was loading
+      const elapsed = (Date.now() - saved.ts) / 1000;
+      // Get duration of track to know if we wrapped around
+      const tempAudio = new Audio(bgTracks[saved.idx % bgTracks.length]);
+      tempAudio.addEventListener('loadedmetadata', () => {
+        const dur = tempAudio.duration || 180;
+        let resumeTime = saved.time + elapsed;
+        let resumeIdx = saved.idx;
+        // If elapsed past end of track, move to next
+        while (resumeTime > dur) {
+          resumeTime -= dur;
+          resumeIdx = (resumeIdx + 1) % bgTracks.length;
+        }
+        bgPlay(resumeIdx, resumeTime);
+      });
+      tempAudio.load();
+      return;
+    }
+  } catch(e) {}
+
+  // No saved state — start fresh
+  bgPlay(0, 0);
 }
-document.addEventListener('click',     startBg, { once: true });
+
+document.addEventListener('click',      startBg, { once: true });
 document.addEventListener('touchstart', startBg, { once: true });
 
-/* Fade bg out when main player plays, fade in when it pauses */
+/* Fade bg out when main player plays, fade in when paused */
 function syncBgVolume(mainPlaying) {
   if (mainPlaying) {
-    /* smoothly fade bg down */
     const fade = setInterval(() => {
       bgAudio.volume = Math.max(0, bgAudio.volume - 0.02);
       if (bgAudio.volume <= 0) { bgAudio.volume = 0; clearInterval(fade); }
     }, 40);
   } else {
-    /* smoothly fade bg back up */
     const fade = setInterval(() => {
       bgAudio.volume = Math.min(0.22, bgAudio.volume + 0.02);
       if (bgAudio.volume >= 0.22) { bgAudio.volume = 0.22; clearInterval(fade); }
@@ -2255,12 +2297,12 @@ pomoRender();
    AMBIENT MIXER — real MP3 files
 ═══════════════════════════════════════ */
 const ambientSrcs = {
-  rain:    '../../../assets/rain.mp3',
-  vinyl:   '../../../assets/vinyl-crackle.mp3',
-  cafe:    '../../../assets/cafe-murmur.mp3',
-  thunder: '../../../assets/distant-thunder.mp3',
-  fan:     '../../../assets/ceiling-fan.mp3',
-  city:    '../../../assets/city-at-night.mp3',
+  rain:    '../../assets/rain.mp3',
+  vinyl:   '../../assets/vinyl-crackle.mp3',
+  cafe:    '../../assets/cafe-murmur.mp3',
+  thunder: '../../assets/distant-thunder.mp3',
+  fan:     '../../assets/ceiling-fan.mp3',
+  city:    '../../assets/city-at-night.mp3',
 };
 const mixAudio = {};
 const mixState = {};
@@ -2658,7 +2700,7 @@ function launchGame() {
   const frame = document.getElementById('gameFrame');
   cover.classList.add('hidden');
   frame.style.display = 'block';
-  frame.src = '../../../assets/road-dreams.html';
+  frame.src = '../../assets/road-dreams.html';
   showToast('The road remembers you — good luck');
 }
 
@@ -2719,10 +2761,10 @@ function launchGame() {
 <div class="ts">
   <div class="ts-panel" id="tsP">
     <div class="ts-panel-title">&#9670; CHOOSE THEME</div>
-    <a class="ts-opt" href="/src/index.html"><span class="ts-dot" style="background:#00ff6a;box-shadow:0 0 5px #00ff6a;"></span><span class="ts-lbl">Ghibli Forest<span class="ts-sub">neon green · pixel</span></span></a>
-    <a class="ts-opt  on" href="/src/themes/4/index.html"><span class="ts-dot" style="background:#d4a853;box-shadow:0 0 5px #d4a853;"></span><span class="ts-lbl">Lofi Den<span class="ts-sub">warm gold · ambient</span></span></a>
-    <a class="ts-opt" href="/src/themes/2/index.html"><span class="ts-dot" style="background:#d4af37;box-shadow:0 0 5px #d4af37;"></span><span class="ts-lbl">Iron Man<span class="ts-sub">red &amp; gold · stark</span></span></a>
-    <a class="ts-opt" href="/src/themes/3/index.html"><span class="ts-dot" style="background:#5c7a5c;box-shadow:0 0 5px #5c7a5c;"></span><span class="ts-lbl">Doctor Doom<span class="ts-sub">dark &amp; brooding</span></span></a>
+    <a class="ts-opt" href="/"><span class="ts-dot" style="background:#00ff6a;box-shadow:0 0 5px #00ff6a;"></span><span class="ts-lbl">Ghibli Forest<span class="ts-sub">neon green · pixel</span></span></a>
+    <a class="ts-opt  on" href="/themes/4/index.html"><span class="ts-dot" style="background:#d4a853;box-shadow:0 0 5px #d4a853;"></span><span class="ts-lbl">Lofi Den<span class="ts-sub">warm gold · ambient</span></span></a>
+    <a class="ts-opt" href="/themes/2/index.html"><span class="ts-dot" style="background:#d4af37;box-shadow:0 0 5px #d4af37;"></span><span class="ts-lbl">Iron Man<span class="ts-sub">red &amp; gold · stark</span></span></a>
+    <a class="ts-opt" href="/themes/3/index.html"><span class="ts-dot" style="background:#5c7a5c;box-shadow:0 0 5px #5c7a5c;"></span><span class="ts-lbl">Doctor Doom<span class="ts-sub">dark &amp; brooding</span></span></a>
   </div>
   <button class="ts-btn" onclick="document.getElementById('tsP').classList.toggle('open')">&#9775; Theme</button>
 </div>
