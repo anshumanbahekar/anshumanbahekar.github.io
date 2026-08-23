@@ -2038,19 +2038,19 @@ document.addEventListener("DOMContentLoaded", function() {
 <div class="theme-switcher">
   <div class="theme-panel" id="themePanel">
     <div class="theme-panel-title">&#9670; CHOOSE THEME</div>
-    <a class="theme-option active" href="/src/index.html">
+    <a class="theme-option active" href="/">
       <span class="theme-dot" style="color:#00ff6a;background:#00ff6a;"></span>
       <span class="theme-label">Ghibli Forest<span class="theme-sub">neon green · pixel</span></span>
     </a>
-    <a class="theme-option" href="/src/themes/4/index.html">
+    <a class="theme-option" href="/themes/4/index.html">
       <span class="theme-dot" style="color:#d4a853;background:#d4a853;"></span>
       <span class="theme-label">Lofi Den<span class="theme-sub">warm gold · ambient</span></span>
     </a>
-    <a class="theme-option" href="/src/themes/2/index.html">
+    <a class="theme-option" href="/themes/2/index.html">
       <span class="theme-dot" style="color:#d4af37;background:#d4af37;"></span>
       <span class="theme-label">Iron Man<span class="theme-sub">red &amp; gold · stark</span></span>
     </a>
-    <a class="theme-option" href="/src/themes/3/index.html">
+    <a class="theme-option" href="/themes/3/index.html">
       <span class="theme-dot" style="color:#5c7a5c;background:#5c7a5c;"></span>
       <span class="theme-label">Doctor Doom<span class="theme-sub">dark &amp; brooding</span></span>
     </a>
@@ -2081,5 +2081,64 @@ document.addEventListener('click', function(e){
 })();
 </script>
 
+<script>
+/* ═══════════════════════════════════════
+   BACKGROUND AMBIENT MUSIC — cross-theme persistent
+═══════════════════════════════════════ */
+(function() {
+  const bgTracks = ['assets/song1.mp3', 'assets/song2.mp3'];
+  const BG_KEY   = 'bgMusicState';
+  let bgStarted  = false;
+  const bgAudio  = new Audio();
+  bgAudio.volume = 0.22;
+
+  function bgSaveState() {
+    try {
+      localStorage.setItem(BG_KEY, JSON.stringify({
+        idx: bgAudio._trackIdx || 0,
+        time: bgAudio.currentTime,
+        ts: Date.now()
+      }));
+    } catch(e) {}
+  }
+  setInterval(bgSaveState, 1000);
+  window.addEventListener('pagehide',      bgSaveState);
+  window.addEventListener('beforeunload',  bgSaveState);
+
+  function bgPlay(idx, fromTime) {
+    bgAudio._trackIdx  = idx;
+    bgAudio.src        = bgTracks[idx % bgTracks.length];
+    bgAudio.currentTime = fromTime || 0;
+    bgAudio.play().catch(() => {});
+  }
+  bgAudio.addEventListener('ended', () => {
+    bgPlay(((bgAudio._trackIdx || 0) + 1) % bgTracks.length, 0);
+  });
+
+  function startBg() {
+    if (bgStarted) return;
+    bgStarted = true;
+    try {
+      const saved = JSON.parse(localStorage.getItem(BG_KEY) || 'null');
+      if (saved) {
+        const elapsed = (Date.now() - saved.ts) / 1000;
+        const tmp = new Audio(bgTracks[saved.idx % bgTracks.length]);
+        tmp.addEventListener('loadedmetadata', () => {
+          const dur = tmp.duration || 180;
+          let t = saved.time + elapsed, i = saved.idx;
+          while (t > dur) { t -= dur; i = (i + 1) % bgTracks.length; }
+          bgPlay(i, t);
+        });
+        tmp.load();
+        return;
+      }
+    } catch(e) {}
+    bgPlay(0, 0);
+  }
+
+  document.addEventListener('click',      startBg, { once: true });
+  document.addEventListener('touchstart', startBg, { once: true });
+})();
+</script>
 </body>
 </html>
