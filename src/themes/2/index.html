@@ -1,0 +1,3870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tony Stark — Iron Man</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;600;700&family=Open+Sans:ital,wght@0,400;0,600;1,400&display=swap');
+
+  :root {
+    --red: #8B1A1A;
+    --red-bright: #C0392B;
+    --red-deep: #5a0e0e;
+    --gold: #D4AF37;
+    --gold-bright: #FFD700;
+    --gold-pale: #fff3cc;
+    --ink: #0a0000;
+    --halftone: #1a0505;
+    --paper: #f5ede0;
+    --paper-aged: #e8d5b0;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Open Sans', sans-serif;
+    background: var(--ink);
+    color: var(--paper);
+    overflow-x: hidden;
+  }
+
+  /* HALFTONE TEXTURE overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 6px 6px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: var(--ink);
+    border-bottom: 3px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    height: 60px;
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.1em;
+    color: var(--gold-bright);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--red-bright); }
+
+  nav ul {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  nav ul a {
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--paper);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  nav ul a:hover { color: var(--gold-bright); }
+
+  /* ─── HERO ─── */
+  #hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: 60px;
+    overflow: hidden;
+    background: var(--red-deep);
+  }
+
+  /* Comic panel borders */
+  #hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 8px solid var(--ink);
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(135deg, var(--ink) 0%, var(--red-deep) 40%, var(--red) 100%);
+  }
+
+  /* Diagonal comic slash */
+  .hero-slash {
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 50%;
+    width: 60%;
+    background: var(--red);
+    clip-path: polygon(8% 0, 100% 0, 92% 100%, 0 100%);
+    opacity: 0.35;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .hero-text { padding-right: 40px; }
+
+  .hero-eyebrow {
+    font-family: 'Oswald', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 2px;
+    background: var(--gold);
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 10vw, 120px);
+    line-height: 0.9;
+    color: var(--gold-bright);
+    text-shadow: 4px 4px 0 var(--red-deep), 8px 8px 0 rgba(0,0,0,0.4);
+    margin-bottom: 8px;
+  }
+
+  .hero-title .outline {
+    -webkit-text-stroke: 2px var(--gold-bright);
+    color: transparent;
+  }
+
+  .hero-subtitle {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(28px, 4vw, 48px);
+    color: var(--red-bright);
+    letter-spacing: 0.06em;
+    margin-bottom: 28px;
+  }
+
+  .hero-desc {
+    font-size: 15px;
+    line-height: 1.75;
+    color: rgba(245,237,224,0.75);
+    max-width: 420px;
+    margin-bottom: 36px;
+    font-style: italic;
+    border-left: 3px solid var(--gold);
+    padding-left: 16px;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--gold-bright);
+    padding: 14px 36px;
+    text-decoration: none;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+    transition: background 0.15s, transform 0.1s;
+  }
+
+  .btn-primary:hover { background: var(--gold); transform: translateY(-2px); }
+
+  .btn-secondary {
+    display: inline-block;
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-bright);
+    background: transparent;
+    border: 2px solid var(--gold-bright);
+    padding: 12px 32px;
+    text-decoration: none;
+    margin-left: 16px;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+    transition: background 0.15s;
+  }
+
+  .btn-secondary:hover { background: rgba(255,215,0,0.1); }
+
+  .hero-image-col {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  .hero-img-frame {
+    position: relative;
+    width: 460px;
+    max-width: 100%;
+  }
+
+  .hero-img-frame::before {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border: 3px solid var(--gold);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .hero-img-frame img {
+    width: 100%;
+    display: block;
+    filter: contrast(1.05) saturate(1.1);
+  }
+
+  /* Speech bubble */
+  .speech-bubble {
+    position: absolute;
+    top: 30px;
+    right: -20px;
+    background: white;
+    color: var(--ink);
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 16px;
+    border: 2px solid var(--ink);
+    max-width: 180px;
+    text-align: center;
+    z-index: 4;
+    line-height: 1.4;
+  }
+
+  .speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -16px;
+    left: 24px;
+    border: 8px solid transparent;
+    border-top: 8px solid var(--ink);
+  }
+
+  /* ─── PANELS SECTION ─── */
+  #legacy {
+    position: relative;
+    background: var(--paper-aged);
+    color: var(--ink);
+    padding: 80px 0 0;
+    overflow: hidden;
+  }
+
+  .section-header {
+    text-align: center;
+    padding: 0 40px;
+    margin-bottom: 60px;
+  }
+
+  .section-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--red-bright);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 6vw, 80px);
+    color: var(--ink);
+    line-height: 0.95;
+    text-shadow: 3px 3px 0 rgba(139,26,26,0.25);
+  }
+
+  /* Comic panels grid */
+  .panels-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 6px;
+    padding: 0 6px 6px;
+    border-top: 6px solid var(--ink);
+  }
+
+  .panel {
+    position: relative;
+    overflow: hidden;
+    border: 4px solid var(--ink);
+    background: var(--ink);
+    cursor: pointer;
+  }
+
+  .panel:hover .panel-overlay { opacity: 1; }
+  .panel:hover img { transform: scale(1.04); }
+
+  .panel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+    filter: sepia(0.15) contrast(1.05);
+  }
+
+  .panel-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(139,26,26,0.75);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.25s;
+    padding: 20px;
+  }
+
+  .panel-overlay-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--gold-bright);
+    text-align: center;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+
+  .panel-overlay-text {
+    font-size: 13px;
+    color: var(--paper);
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  /* Action lines on panel 1 */
+  .panel-1 {
+    grid-column: 1;
+    grid-row: 1;
+    height: 340px;
+  }
+
+  .panel-2 {
+    grid-column: 2;
+    grid-row: 1;
+    height: 340px;
+  }
+
+  .panel-3 {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+    height: 100%;
+  }
+
+  .panel-4 {
+    grid-column: 1;
+    grid-row: 2;
+    height: 280px;
+  }
+
+  .panel-5 {
+    grid-column: 2;
+    grid-row: 2;
+    height: 280px;
+  }
+
+  /* Caption boxes */
+  .caption {
+    position: absolute;
+    background: var(--gold-bright);
+    color: var(--ink);
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    z-index: 2;
+    top: 10px;
+    left: 10px;
+    border: 1px solid var(--ink);
+  }
+
+  /* ─── STARK INTEL / QUOTE SECTION ─── */
+  #intel {
+    background: var(--ink);
+    padding: 100px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #intel::before {
+    content: 'CLASSIFIED';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-25deg);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 160px;
+    color: rgba(139,26,26,0.06);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: 0.08em;
+  }
+
+  .intel-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .intel-img-wrap {
+    position: relative;
+  }
+
+  .intel-img-wrap::before {
+    content: '';
+    position: absolute;
+    top: -8px; left: -8px;
+    right: 8px; bottom: 8px;
+    border: 2px solid var(--gold);
+    z-index: 0;
+  }
+
+  .intel-img-wrap img {
+    width: 100%;
+    display: block;
+    position: relative;
+    z-index: 1;
+    filter: sepia(0.1) contrast(1.08);
+    border: 3px solid var(--red-deep);
+  }
+
+  .intel-tag {
+    position: absolute;
+    bottom: -8px;
+    right: -8px;
+    background: var(--red);
+    color: var(--gold-bright);
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    padding: 6px 14px;
+    text-transform: uppercase;
+    border: 1px solid var(--gold);
+    z-index: 2;
+  }
+
+  .intel-text {}
+
+  .intel-issue {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--red-bright);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .intel-issue::before {
+    content: '';
+    display: block;
+    width: 28px;
+    height: 2px;
+    background: var(--red-bright);
+  }
+
+  .intel-quote {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 4vw, 56px);
+    line-height: 1.05;
+    color: var(--gold-bright);
+    margin-bottom: 28px;
+  }
+
+  .intel-quote em {
+    color: var(--red-bright);
+    font-style: normal;
+  }
+
+  .intel-body {
+    font-size: 14px;
+    line-height: 1.8;
+    color: rgba(245,237,224,0.7);
+    margin-bottom: 32px;
+  }
+
+  .stat-row {
+    display: flex;
+    gap: 36px;
+    margin-bottom: 32px;
+  }
+
+  .stat {
+    border-top: 2px solid var(--gold);
+    padding-top: 12px;
+  }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 40px;
+    color: var(--gold-bright);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: rgba(245,237,224,0.5);
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  /* ─── WIDE PANEL ─── */
+  #widepanel {
+    position: relative;
+    height: 380px;
+    overflow: hidden;
+    border-top: 6px solid var(--ink);
+    border-bottom: 6px solid var(--ink);
+  }
+
+  #widepanel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    display: block;
+    filter: sepia(0.2) contrast(1.1);
+  }
+
+  .widepanel-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(10,0,0,0.85) 30%, transparent 70%);
+    display: flex;
+    align-items: center;
+    padding: 60px;
+  }
+
+  .wp-text {}
+
+  .wp-shout {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 7vw, 90px);
+    line-height: 0.95;
+    color: var(--gold-bright);
+    text-shadow: 3px 3px 0 var(--red-deep);
+    margin-bottom: 12px;
+  }
+
+  .wp-sub {
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: var(--red-bright);
+    text-transform: uppercase;
+  }
+
+  /* Sound FX */
+  .sfx {
+    position: absolute;
+    font-family: 'Bebas Neue', sans-serif;
+    color: var(--gold-bright);
+    text-shadow: 3px 3px 0 var(--red-deep), 6px 6px 0 rgba(0,0,0,0.3);
+    pointer-events: none;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    opacity: 0.85;
+  }
+
+  /* ─── BRIEFING / CAST ROW ─── */
+  #briefing {
+    background: var(--paper);
+    color: var(--ink);
+    padding: 80px 40px;
+    border-top: 6px solid var(--ink);
+  }
+
+  .briefing-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .briefing-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 48px;
+    border-bottom: 3px solid var(--ink);
+    padding-bottom: 16px;
+  }
+
+  .briefing-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .briefing-issue {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--red-bright);
+    text-transform: uppercase;
+    margin-left: auto;
+  }
+
+  .cast-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    border: 4px solid var(--ink);
+  }
+
+  .cast-card {
+    position: relative;
+    overflow: hidden;
+    border-right: 4px solid var(--ink);
+    background: var(--ink);
+  }
+
+  .cast-card:last-child { border-right: none; }
+
+  .cast-card img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    filter: sepia(0.1) contrast(1.05);
+    transition: transform 0.3s;
+  }
+
+  .cast-card:hover img { transform: scale(1.05); }
+
+  .cast-info {
+    background: var(--ink);
+    padding: 14px 16px;
+    border-top: 3px solid var(--gold);
+  }
+
+  .cast-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--gold-bright);
+    letter-spacing: 0.06em;
+    margin-bottom: 2px;
+  }
+
+  .cast-role {
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: var(--red-bright);
+    text-transform: uppercase;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--red-deep);
+    border-top: 4px solid var(--gold);
+    padding: 48px 40px;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    color: var(--gold-bright);
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+  }
+
+  .footer-tagline {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    color: rgba(245,237,224,0.5);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+
+  .footer-divider {
+    width: 60px;
+    height: 2px;
+    background: var(--gold);
+    margin: 0 auto 28px;
+  }
+
+  .footer-copy {
+    font-size: 12px;
+    color: rgba(245,237,224,0.35);
+    letter-spacing: 0.06em;
+  }
+
+  /* ─── SCROLL ANIMATIONS ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ═══════════════════════════════════════════════════
+     ADVANCED ANIMATIONS & INTERACTIVE FEATURES
+  ═══════════════════════════════════════════════════ */
+
+  /* ── HUD Overlay ── */
+  #hud-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .hud-scanline {
+    position: absolute;
+    left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255,215,0,0.18), rgba(255,215,0,0.35), rgba(255,215,0,0.18), transparent);
+    animation: scanMove 4s linear infinite;
+  }
+  @keyframes scanMove {
+    0% { top: 0; opacity: 0; }
+    5% { opacity: 1; }
+    95% { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+  }
+  .hud-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,215,0,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,215,0,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: hudPulse 3s ease-in-out infinite;
+  }
+  @keyframes hudPulse {
+    0%,100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+  .hud-corner {
+    position: absolute;
+    width: 40px; height: 40px;
+    border-color: rgba(255,215,0,0.6);
+    border-style: solid;
+  }
+  .hud-corner.tl { top:72px; left:10px; border-width:2px 0 0 2px; }
+  .hud-corner.tr { top:72px; right:10px; border-width:2px 2px 0 0; }
+  .hud-corner.bl { bottom:10px; left:10px; border-width:0 0 2px 2px; }
+  .hud-corner.br { bottom:10px; right:10px; border-width:0 2px 2px 0; }
+  .hud-data {
+    position: absolute;
+    font-family: 'Oswald', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: rgba(255,215,0,0.55);
+    animation: dataFlicker 2s steps(1) infinite;
+  }
+  .hud-data.d1 { top:80px; left:56px; }
+  .hud-data.d2 { top:100px; left:56px; }
+  .hud-data.d3 { bottom:40px; right:56px; text-align:right; }
+  .hud-data.d4 { bottom:60px; right:56px; text-align:right; }
+  .hud-crosshair {
+    position: absolute;
+    top: 50%; left: 62%;
+    transform: translate(-50%,-50%);
+    width: 60px; height: 60px;
+    animation: crossRotate 8s linear infinite;
+  }
+  .hud-crosshair::before, .hud-crosshair::after {
+    content:'';
+    position:absolute;
+    background:rgba(255,215,0,0.4);
+  }
+  .hud-crosshair::before { top:50%; left:0; right:0; height:1px; margin-top:-.5px; }
+  .hud-crosshair::after  { left:50%; top:0; bottom:0; width:1px; margin-left:-.5px; }
+  @keyframes crossRotate { to { transform: translate(-50%,-50%) rotate(360deg); } }
+  @keyframes dataFlicker {
+    0%,100% { opacity: 0.55; }
+    40% { opacity: 0.2; }
+    42% { opacity: 0.55; }
+    80% { opacity: 0.35; }
+    82% { opacity: 0.55; }
+  }
+  .hud-bar {
+    position: absolute;
+    bottom: 80px;
+    left: 56px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .hud-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .hud-bar-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: rgba(255,215,0,0.5);
+    width: 40px;
+  }
+  .hud-bar-track {
+    width: 80px;
+    height: 4px;
+    background: rgba(255,215,0,0.15);
+    border: 1px solid rgba(255,215,0,0.25);
+    overflow: hidden;
+  }
+  .hud-bar-fill {
+    height: 100%;
+    background: rgba(255,215,0,0.6);
+    animation: barAnim 3s ease-in-out infinite;
+  }
+  @keyframes barAnim {
+    0% { width: 78%; }
+    50% { width: 92%; }
+    100% { width: 78%; }
+  }
+
+  /* ── ARC REACTOR PARTICLES ── */
+  #particle-canvas {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  /* ── BOOT SEQUENCE ── */
+  #boot-seq {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    transition: opacity 0.8s ease;
+  }
+  #boot-seq.done { opacity: 0; pointer-events: none; }
+  .boot-ring {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 3px solid #FFD700;
+    border-top-color: transparent;
+    animation: bootSpin 0.8s linear infinite;
+    box-shadow: 0 0 20px rgba(255,215,0,0.4), inset 0 0 20px rgba(255,215,0,0.1);
+  }
+  @keyframes bootSpin { to { transform: rotate(360deg); } }
+  .boot-text {
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    color: rgba(255,215,0,0.8);
+    text-transform: uppercase;
+  }
+  .boot-progress-wrap {
+    width: 200px;
+    height: 3px;
+    background: rgba(255,215,0,0.15);
+    border: 1px solid rgba(255,215,0,0.3);
+  }
+  .boot-progress-fill {
+    height: 100%;
+    background: #FFD700;
+    width: 0;
+    transition: width 0.1s linear;
+    box-shadow: 0 0 8px rgba(255,215,0,0.6);
+  }
+
+  /* ── PAGE FLIP TRANSITIONS ── */
+  .flip-section {
+    opacity: 0;
+    transform: perspective(1200px) rotateY(-8deg);
+    transform-origin: left center;
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .flip-section.flipped {
+    opacity: 1;
+    transform: perspective(1200px) rotateY(0deg);
+  }
+
+  /* ── TIMELINE ── */
+  #timeline {
+    background: var(--paper-aged);
+    padding: 80px 0 60px;
+    overflow: hidden;
+    border-top: 6px solid var(--ink);
+    border-bottom: 6px solid var(--ink);
+  }
+  .timeline-header {
+    text-align: center;
+    padding: 0 40px;
+    margin-bottom: 50px;
+  }
+  .timeline-scroll-wrap {
+    overflow-x: auto;
+    padding: 0 40px 24px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold) var(--red-deep);
+    cursor: grab;
+  }
+  .timeline-scroll-wrap:active { cursor: grabbing; }
+  .timeline-track {
+    display: flex;
+    gap: 0;
+    width: max-content;
+    position: relative;
+    padding-bottom: 40px;
+  }
+  .timeline-track::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    top: 110px;
+    height: 4px;
+    background: var(--ink);
+    z-index: 0;
+  }
+  .tl-item {
+    width: 180px;
+    flex-shrink: 0;
+    position: relative;
+    padding: 0 12px;
+    text-align: center;
+  }
+  .tl-dot {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--gold-bright);
+    border: 3px solid var(--ink);
+    margin: 100px auto 0;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .tl-item:hover .tl-dot {
+    transform: scale(1.4);
+    box-shadow: 0 0 12px rgba(255,215,0,0.6);
+  }
+  .tl-year {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--ink);
+    margin-top: 12px;
+    line-height: 1;
+  }
+  .tl-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-top: 4px;
+  }
+  .tl-desc {
+    font-size: 11px;
+    color: rgba(10,0,0,0.6);
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+  .tl-badge {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--gold-bright);
+    font-family: 'Oswald', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    padding: 2px 8px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 12px; right: 12px;
+    height: 90px;
+    border: 3px solid var(--ink);
+    background: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .tl-panel-art {
+    position: absolute;
+    top: 3px; left: 15px;
+    right: 15px;
+    height: 84px;
+    overflow: hidden;
+    z-index: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ── ARMOR DATABASE ── */
+  #armory {
+    background: var(--ink);
+    padding: 80px 40px;
+    border-top: 6px solid var(--red-deep);
+  }
+  .armory-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .armor-card {
+    perspective: 1000px;
+    height: 260px;
+    cursor: pointer;
+  }
+  .armor-card-inner {
+    position: relative;
+    width: 100%; height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+  }
+  .armor-card:hover .armor-card-inner,
+  .armor-card.flipped .armor-card-inner {
+    transform: rotateY(180deg);
+  }
+  .armor-front, .armor-back {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border: 2px solid var(--red);
+    overflow: hidden;
+  }
+  .armor-front {
+    background: var(--red-deep);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .armor-mark {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    color: var(--gold-bright);
+    line-height: 1;
+    text-shadow: 2px 2px 0 var(--red-deep);
+  }
+  .armor-name {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--paper);
+    text-transform: uppercase;
+    text-align: center;
+    padding: 0 10px;
+  }
+  .armor-year-badge {
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px;
+    color: var(--red-bright);
+    letter-spacing: 0.1em;
+  }
+  .armor-front-decor {
+    width: 50px; height: 50px;
+    border: 2px solid rgba(255,215,0,0.2);
+    border-radius: 50%;
+    position: absolute;
+    top: 16px; right: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .armor-front-decor::after {
+    content: '';
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: rgba(255,215,0,0.15);
+    border: 1px solid rgba(255,215,0,0.4);
+  }
+  .armor-back {
+    background: var(--paper);
+    transform: rotateY(180deg);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .armor-back-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--ink);
+    line-height: 1;
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+  }
+  .armor-stat {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    padding: 3px 0;
+    border-bottom: 1px solid rgba(10,0,0,0.1);
+  }
+  .armor-stat-key {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--red);
+    font-size: 10px;
+    text-transform: uppercase;
+  }
+  .armor-stat-val {
+    font-size: 11px;
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .armor-back-note {
+    font-size: 10px;
+    color: rgba(10,0,0,0.5);
+    font-style: italic;
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+  .armor-grid-bar {
+    height: 6px;
+    background: var(--gold-bright);
+    margin-top: 3px;
+    border-radius: 1px;
+  }
+
+  /* ── QUOTES WALL ── */
+  #quotes {
+    background: var(--paper-aged);
+    padding: 80px 40px;
+    border-top: 6px solid var(--ink);
+    border-bottom: 6px solid var(--ink);
+    overflow: hidden;
+    position: relative;
+  }
+  #quotes::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(10,0,0,0.07) 1px, transparent 1px);
+    background-size: 8px 8px;
+    pointer-events: none;
+  }
+  .quotes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .quote-bubble {
+    position: relative;
+    background: white;
+    border: 3px solid var(--ink);
+    padding: 20px 20px 24px;
+    opacity: 0;
+    transform: translateY(24px) scale(0.95);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .quote-bubble.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  .quote-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 28px;
+    border-left: 14px solid transparent;
+    border-right: 14px solid transparent;
+    border-top: 18px solid var(--ink);
+  }
+  .quote-bubble::before {
+    content: '';
+    position: absolute;
+    bottom: -14px;
+    left: 31px;
+    border-left: 11px solid transparent;
+    border-right: 11px solid transparent;
+    border-top: 14px solid white;
+    z-index: 1;
+  }
+  .quote-bubble.alt::after {
+    left: auto; right: 28px;
+  }
+  .quote-bubble.alt::before {
+    left: auto; right: 31px;
+  }
+  .quote-text {
+    font-family: 'Oswald', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+  }
+  .quote-attr {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 10px;
+    color: var(--red);
+    font-style: italic;
+    margin-top: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+  }
+  .quote-num {
+    position: absolute;
+    top: -14px;
+    right: 12px;
+    background: var(--gold-bright);
+    color: var(--ink);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    padding: 2px 8px;
+    border: 2px solid var(--ink);
+  }
+  .quote-avatar {
+    position: absolute;
+    bottom: -48px;
+    left: 12px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--red-deep);
+    border: 2px solid var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    color: var(--gold-bright);
+  }
+  .quote-bubble.alt .quote-avatar {
+    left: auto; right: 12px;
+  }
+
+  /* ── MISSIONS LOG ── */
+  #missions {
+    background: var(--ink);
+    padding: 80px 40px;
+    border-top: 6px solid var(--red-deep);
+  }
+  .missions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 3px;
+    max-width: 1100px;
+    margin: 0 auto;
+    border: 3px solid var(--red-deep);
+  }
+  .mission-card {
+    position: relative;
+    background: var(--red-deep);
+    padding: 24px 20px 20px;
+    border: 2px solid transparent;
+    overflow: hidden;
+    transition: border-color 0.2s, background 0.2s;
+    cursor: default;
+  }
+  .mission-card:hover {
+    border-color: var(--gold);
+    background: #1a0505;
+  }
+  .mission-card::before {
+    content: 'DECLASSIFIED';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%) rotate(-25deg);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: rgba(192,57,43,0.08);
+    white-space: nowrap;
+    letter-spacing: 0.08em;
+    pointer-events: none;
+  }
+  .mission-number {
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: rgba(255,215,0,0.4);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .mission-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    color: var(--gold-bright);
+    line-height: 1;
+    margin-bottom: 6px;
+    letter-spacing: 0.04em;
+  }
+  .mission-year {
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: var(--red-bright);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .mission-desc {
+    font-size: 11px;
+    color: rgba(245,237,224,0.55);
+    line-height: 1.6;
+    margin-bottom: 14px;
+  }
+  .mission-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .mission-tag {
+    font-family: 'Oswald', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: rgba(255,215,0,0.08);
+    border: 1px solid rgba(255,215,0,0.2);
+    padding: 2px 7px;
+  }
+  .mission-status {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #27ae60;
+    text-transform: uppercase;
+    border: 1px solid #27ae60;
+    padding: 2px 7px;
+  }
+  .mission-status.active {
+    color: var(--gold-bright);
+    border-color: var(--gold-bright);
+    animation: statusBlink 1.5s steps(1) infinite;
+  }
+  @keyframes statusBlink {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+  .mission-divider {
+    height: 1px;
+    background: rgba(255,215,0,0.12);
+    margin: 10px 0;
+  }
+  .mission-threat {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .mission-threat-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: rgba(245,237,224,0.4);
+    text-transform: uppercase;
+  }
+  .threat-dots {
+    display: flex;
+    gap: 3px;
+  }
+  .threat-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--red-bright);
+    opacity: 0.3;
+  }
+  .threat-dot.on { opacity: 1; }
+
+  /* ── REPULSOR CURSOR ── */
+  #cursor-glow {
+    position: fixed;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: rgba(255,215,0,0.7);
+    box-shadow: 0 0 12px 4px rgba(255,215,0,0.4);
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%,-50%);
+    transition: transform 0.05s, width 0.15s, height 0.15s, opacity 0.15s;
+    mix-blend-mode: screen;
+  }
+  #cursor-ring {
+    position: fixed;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,215,0,0.5);
+    pointer-events: none;
+    z-index: 9997;
+    transform: translate(-50%,-50%);
+    transition: transform 0.12s ease-out, width 0.2s, height 0.2s;
+  }
+
+
+  /* ═══ TICKER ═══ */
+  #stark-ticker {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    height: 28px; background: #FFD700; border-bottom: 2px solid #8B1A1A;
+    overflow: hidden; display: flex; align-items: center;
+  }
+  .ticker-label {
+    flex-shrink: 0; background: #8B1A1A; color: #FFD700;
+    font-family: 'Oswald',sans-serif; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.14em; padding: 0 14px; height: 100%;
+    display: flex; align-items: center; text-transform: uppercase; white-space: nowrap;
+  }
+  .ticker-track {
+    display: flex; animation: tickerScroll 40s linear infinite;
+    white-space: nowrap;
+  }
+  .ticker-item {
+    font-family: 'Oswald',sans-serif; font-size: 11px; font-weight: 600;
+    color: #0a0000; padding: 0 28px; letter-spacing: 0.06em;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .ticker-item .up { color: #1a7a1a; }
+  .ticker-item .dn { color: #8B1A1A; }
+  .ticker-sep { color: #8B1A1A; font-weight: 700; }
+  @keyframes tickerScroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+  /* ═══ PUSH NAV DOWN for ticker ═══ */
+  nav { top: 28px !important; }
+  #hero { padding-top: 88px !important; }
+
+  /* ═══ ARC REACTOR SECTION ═══ */
+  #arc-reactor-section {
+    background: #000;
+    padding: 80px 40px;
+    border-top: 6px solid #8B1A1A;
+    border-bottom: 6px solid #8B1A1A;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  #arc-reactor-section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, rgba(0,80,150,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .arc-section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(44px,6vw,72px);
+    color: #FFD700;
+    letter-spacing: 0.08em;
+    text-align: center;
+    margin-bottom: 8px;
+    text-shadow: 3px 3px 0 #5a0e0e;
+  }
+  .arc-section-sub {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: rgba(255,215,0,0.5);
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  #arc-svg-wrap {
+    position: relative;
+    width: 380px;
+    height: 380px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #arc-stats {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 24px;
+    max-width: 700px;
+    width: 100%;
+  }
+  .arc-stat {
+    text-align: center;
+    border-top: 2px solid rgba(255,215,0,0.3);
+    padding-top: 12px;
+  }
+  .arc-stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    color: #FFD700;
+    line-height: 1;
+  }
+  .arc-stat-lbl {
+    font-family: 'Oswald', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: rgba(255,215,0,0.45);
+    text-transform: uppercase;
+    margin-top: 3px;
+  }
+
+  /* ═══ 3D ARMOR SECTION ═══ */
+  #armor-3d-section {
+    background: #0a0000;
+    padding: 80px 40px;
+    border-top: 6px solid #8B1A1A;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #three-canvas-wrap {
+    width: 500px;
+    height: 500px;
+    max-width: 100%;
+    border: 2px solid #8B1A1A;
+    position: relative;
+    cursor: grab;
+    background: radial-gradient(ellipse at center, #1a0000 0%, #000 100%);
+  }
+  #three-canvas-wrap:active { cursor: grabbing; }
+  #three-canvas { display: block; width: 100% !important; height: 100% !important; }
+  .armor-controls {
+    display: flex; gap: 12px; margin-top: 20px;
+  }
+  .armor-btn {
+    font-family: 'Oswald', sans-serif;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: #FFD700; background: transparent;
+    border: 1px solid #FFD700; padding: 8px 22px;
+    cursor: pointer; transition: background 0.15s;
+  }
+  .armor-btn:hover, .armor-btn.active { background: rgba(255,215,0,0.15); }
+  .armor-drag-hint {
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px; letter-spacing: 0.14em;
+    color: rgba(255,215,0,0.35);
+    text-transform: uppercase;
+    margin-top: 10px;
+  }
+
+  /* ═══ HOLOGRAM PANELS ═══ */
+  #holo-panels {
+    background: var(--paper-aged);
+    padding: 80px 40px;
+    border-top: 6px solid var(--ink);
+    border-bottom: 6px solid var(--ink);
+    overflow: hidden;
+  }
+  .holo-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 8px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .holo-card {
+    position: relative;
+    border: 4px solid var(--ink);
+    overflow: hidden;
+    transform-style: preserve-3d;
+    transition: transform 0.1s ease-out;
+    cursor: pointer;
+    height: 280px;
+  }
+  .holo-card img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+    filter: contrast(1.05) sepia(0.1);
+  }
+  .holo-shine {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,215,0,0) 30%, rgba(255,215,0,0.18) 50%, rgba(255,215,0,0) 70%);
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+  }
+  .holo-card:hover .holo-shine { opacity: 1; }
+  .holo-border {
+    position: absolute; inset: 0;
+    border: 2px solid rgba(255,215,0,0);
+    transition: border-color 0.2s;
+    pointer-events: none;
+  }
+  .holo-card:hover .holo-border { border-color: rgba(255,215,0,0.5); }
+
+  /* ═══ JARVIS TELEMETRY ═══ */
+  #telemetry {
+    background: #000;
+    padding: 80px 40px;
+    border-top: 6px solid #8B1A1A;
+    border-bottom: 6px solid #8B1A1A;
+  }
+  .telem-grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .telem-panel {
+    background: #050000;
+    border: 1px solid #8B1A1A;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .telem-panel::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, #FFD700, transparent);
+    animation: telemScan 2s linear infinite;
+  }
+  @keyframes telemScan { 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }
+  .telem-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.18em; color: rgba(255,215,0,0.5);
+    text-transform: uppercase; margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .telem-dot { width: 6px; height: 6px; border-radius: 50%; background: #27ae60; animation: telemBlink 1s steps(1) infinite; }
+  @keyframes telemBlink { 0%,100%{opacity:1} 50%{opacity:0} }
+  .telem-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px; color: #FFD700;
+    line-height: 1; margin-bottom: 8px;
+  }
+  .telem-unit {
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px; color: rgba(255,215,0,0.4);
+    letter-spacing: 0.14em; text-transform: uppercase;
+  }
+  canvas.telem-chart {
+    width: 100% !important;
+    height: 80px;
+    margin-top: 12px;
+    display: block;
+  }
+  .telem-bar-wrap {
+    margin-top: 10px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .telem-bar-row {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .telem-bar-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 9px; letter-spacing: 0.1em;
+    color: rgba(255,215,0,0.4);
+    width: 56px; text-transform: uppercase; flex-shrink: 0;
+  }
+  .telem-bar-outer {
+    flex: 1; height: 6px;
+    background: rgba(255,215,0,0.08);
+    border: 1px solid rgba(255,215,0,0.15);
+    overflow: hidden;
+  }
+  .telem-bar-inner {
+    height: 100%;
+    background: #FFD700;
+    transition: width 0.8s ease;
+  }
+  .telem-bar-val {
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px; font-weight: 600;
+    color: #FFD700; width: 32px; text-align: right;
+  }
+
+  /* ═══ DESTRUCTION MODE ═══ */
+  #destroy-btn {
+    position: fixed;
+    bottom: 28px; right: 28px;
+    z-index: 500;
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: #0a0000; background: #FFD700;
+    border: 2px solid #8B1A1A; padding: 10px 18px;
+    cursor: pointer;
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+    transition: background 0.15s, transform 0.1s;
+    box-shadow: 0 0 16px rgba(255,215,0,0.3);
+  }
+  #destroy-btn:hover { background: #fff; transform: scale(1.05); }
+  #crack-overlay {
+    position: fixed; inset: 0; z-index: 9990;
+    pointer-events: none; opacity: 0;
+    transition: opacity 0.3s;
+    background: transparent;
+  }
+  #crack-overlay.active { opacity: 1; pointer-events: all; }
+  #crack-svg {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+  }
+  #reboot-screen {
+    position: fixed; inset: 0; z-index: 9995;
+    background: #0a0000;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.4s;
+  }
+  #reboot-screen.active { opacity: 1; pointer-events: all; }
+  .reboot-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px; color: #FFD700;
+    letter-spacing: 0.1em;
+    text-shadow: 0 0 30px rgba(255,215,0,0.6);
+    animation: rebootFlicker 0.15s steps(1) infinite;
+  }
+  @keyframes rebootFlicker { 0%,100%{opacity:1} 50%{opacity:0.6} }
+  .reboot-sub {
+    font-family: 'Oswald', sans-serif;
+    font-size: 12px; letter-spacing: 0.2em;
+    color: rgba(255,215,0,0.5); text-transform: uppercase;
+    margin-top: 12px;
+  }
+
+  /* ═══ JARVIS VOICE BTN ═══ */
+  #jarvis-voice-btn {
+    position: fixed;
+    bottom: 80px; right: 28px;
+    z-index: 500;
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: #FFD700; background: #0a0000;
+    border: 1px solid #FFD700; padding: 9px 14px;
+    cursor: pointer;
+    transition: background 0.15s;
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  }
+  #jarvis-voice-btn:hover { background: rgba(255,215,0,0.1); }
+
+  /* ═══ ARC HUM BTN ═══ */
+  #hum-btn {
+    position: fixed;
+    bottom: 130px; right: 28px;
+    z-index: 500;
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,215,0,0.6); background: #0a0000;
+    border: 1px solid rgba(255,215,0,0.3); padding: 9px 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  }
+  #hum-btn.on { border-color: #FFD700; color: #FFD700; background: rgba(255,215,0,0.05); animation: humPulse 2s ease-in-out infinite; }
+  @keyframes humPulse { 0%,100%{box-shadow:0 0 6px rgba(255,215,0,0.2)} 50%{box-shadow:0 0 14px rgba(255,215,0,0.5)} }
+
+  /* ═══ EASTER EGG OVERLAY ═══ */
+  #easter-egg {
+    position: fixed; inset: 0; z-index: 9999;
+    background: #000;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.5s;
+  }
+  #easter-egg.active { opacity: 1; pointer-events: all; }
+  .ee-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(60px,12vw,120px);
+    line-height: 0.9;
+    text-align: center;
+    color: #FFD700;
+    text-shadow: 0 0 60px rgba(255,215,0,0.8), 0 0 120px rgba(255,100,0,0.4);
+    animation: eePulse 0.5s ease-in-out infinite alternate;
+  }
+  @keyframes eePulse { 0%{text-shadow:0 0 40px rgba(255,215,0,0.6)} 100%{text-shadow:0 0 80px rgba(255,215,0,1), 0 0 160px rgba(255,100,0,0.6)} }
+  #ee-canvas { position:absolute; inset:0; pointer-events:none; }
+  .ee-close {
+    margin-top:40px; font-family:'Oswald',sans-serif;
+    font-size:12px; letter-spacing:0.2em; color:rgba(255,215,0,0.5);
+    text-transform:uppercase; cursor:pointer;
+  }
+  .ee-close:hover { color:#FFD700; }
+
+
+  /* ═══ CORNER VIDEO PLAYER ═══ */
+  #corner-video-wrap {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    z-index: 600;
+    width: 300px;
+    background: #0a0000;
+    border: 2px solid #FFD700;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+    box-shadow: 0 0 24px rgba(255,215,0,0.25), 0 4px 32px rgba(0,0,0,0.8);
+    transition: width 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  #corner-video-wrap:hover {
+    box-shadow: 0 0 40px rgba(255,215,0,0.45), 0 4px 40px rgba(0,0,0,0.9);
+  }
+  #corner-video-wrap.minimized {
+    width: 120px;
+  }
+  #corner-video-wrap.minimized #corner-video { height: 68px; }
+  #corner-video-wrap.minimized #video-controls { display: none; }
+  #corner-video-wrap.minimized #video-topbar { border-bottom: none; }
+
+  #video-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 10px;
+    border-bottom: 1px solid rgba(255,215,0,0.2);
+    cursor: move;
+  }
+  .video-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    color: #FFD700;
+    text-transform: uppercase;
+  }
+  .video-live-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #e53935;
+    animation: telemBlink 1s steps(1) infinite;
+    margin-right: 5px;
+    display: inline-block;
+  }
+  .video-topbar-btns {
+    display: flex;
+    gap: 6px;
+  }
+  .video-topbar-btn {
+    background: none;
+    border: 1px solid rgba(255,215,0,0.35);
+    color: rgba(255,215,0,0.7);
+    font-size: 10px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    padding: 2px 7px;
+    cursor: pointer;
+    letter-spacing: 0.06em;
+    transition: background 0.1s, color 0.1s;
+    line-height: 1.4;
+  }
+  .video-topbar-btn:hover {
+    background: rgba(255,215,0,0.12);
+    color: #FFD700;
+    border-color: #FFD700;
+  }
+  #corner-video {
+    width: 100%;
+    height: 169px;
+    display: block;
+    background: #000;
+    transition: height 0.3s ease;
+  }
+  #video-controls {
+    padding: 7px 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-top: 1px solid rgba(255,215,0,0.12);
+  }
+  .vc-btn {
+    background: none;
+    border: none;
+    color: #FFD700;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 2px 5px;
+    line-height: 1;
+    opacity: 0.8;
+    transition: opacity 0.1s;
+    font-family: monospace;
+  }
+  .vc-btn:hover { opacity: 1; }
+  #vc-progress-wrap {
+    flex: 1;
+    height: 4px;
+    background: rgba(255,215,0,0.12);
+    border: 1px solid rgba(255,215,0,0.2);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  #vc-progress-fill {
+    height: 100%;
+    background: #FFD700;
+    width: 0%;
+    pointer-events: none;
+    transition: width 0.1s linear;
+  }
+  #vc-time {
+    font-family: 'Oswald', sans-serif;
+    font-size: 9px;
+    color: rgba(255,215,0,0.5);
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+  #vc-vol {
+    font-size: 11px;
+    cursor: pointer;
+    color: rgba(255,215,0,0.6);
+    background: none;
+    border: none;
+    padding: 2px 4px;
+    font-family: monospace;
+    transition: color 0.1s;
+  }
+  #vc-vol:hover { color: #FFD700; }
+
+</style>
+</head>
+<body>
+
+
+<!-- STARK TICKER -->
+<div id="stark-ticker">
+  <div class="ticker-label">Stark Industries</div>
+  <div class="ticker-track">
+    <div class="ticker-item"><strong>STARK INDUSTRIES</strong> <span class="up">▲ +4.2%</span> $1,847.33 <span class="ticker-sep">|</span></div><div class="ticker-item">ARC REACTOR OUTPUT: NOMINAL <span class="ticker-sep">◆</span></div><div class="ticker-item">PEPPER POTTS APPROVED THIS MESSAGE <span class="ticker-sep">◆</span></div><div class="ticker-item"><strong>SI DEFENSE DIV</strong> <span class="up">▲ +2.8%</span> $924.11 <span class="ticker-sep">|</span></div><div class="ticker-item">SUIT COUNT: 50 AND COUNTING <span class="ticker-sep">◆</span></div><div class="ticker-item">THREAT LEVEL: ELEVATED — STAY ALERT <span class="ticker-sep">◆</span></div><div class="ticker-item"><strong>HAMMER TECH</strong> <span class="dn">▼ -18.4%</span> $12.07 <span class="ticker-sep">|</span></div><div class="ticker-item">JARVIS UPTIME: 99.97% <span class="ticker-sep">◆</span></div><div class="ticker-item">AVENGERS INITIATIVE: ACTIVE <span class="ticker-sep">◆</span></div><div class="ticker-item"><strong>VIBRANIUM ALLOYS</strong> <span class="up">▲ +6.1%</span> $3,204.50 <span class="ticker-sep">|</span></div><div class="ticker-item">MARK L NANOBOTS: 94% INTEGRITY <span class="ticker-sep">◆</span></div><div class="ticker-item">REPULSOR TECH — NEXT GEN IN DEVELOPMENT <span class="ticker-sep">◆</span></div><div class="ticker-item"><strong>OSCORP</strong> <span class="dn">▼ -3.2%</span> $88.40 <span class="ticker-sep">|</span></div><div class="ticker-item">I AM IRON MAN — T. STARK <span class="ticker-sep">◆</span></div>
+    <div class="ticker-item"><strong>STARK INDUSTRIES</strong> <span class="up">▲ +4.2%</span> $1,847.33 <span class="ticker-sep">|</span></div><div class="ticker-item">ARC REACTOR OUTPUT: NOMINAL <span class="ticker-sep">◆</span></div><div class="ticker-item">PEPPER POTTS APPROVED THIS MESSAGE <span class="ticker-sep">◆</span></div><div class="ticker-item"><strong>SI DEFENSE DIV</strong> <span class="up">▲ +2.8%</span> $924.11 <span class="ticker-sep">|</span></div><div class="ticker-item">SUIT COUNT: 50 AND COUNTING <span class="ticker-sep">◆</span></div><div class="ticker-item">THREAT LEVEL: ELEVATED — STAY ALERT <span class="ticker-sep">◆</span></div><div class="ticker-item"><strong>HAMMER TECH</strong> <span class="dn">▼ -18.4%</span> $12.07 <span class="ticker-sep">|</span></div><div class="ticker-item">JARVIS UPTIME: 99.97% <span class="ticker-sep">◆</span></div><div class="ticker-item">AVENGERS INITIATIVE: ACTIVE <span class="ticker-sep">◆</span></div><div class="ticker-item"><strong>VIBRANIUM ALLOYS</strong> <span class="up">▲ +6.1%</span> $3,204.50 <span class="ticker-sep">|</span></div><div class="ticker-item">MARK L NANOBOTS: 94% INTEGRITY <span class="ticker-sep">◆</span></div><div class="ticker-item">REPULSOR TECH — NEXT GEN IN DEVELOPMENT <span class="ticker-sep">◆</span></div><div class="ticker-item"><strong>OSCORP</strong> <span class="dn">▼ -3.2%</span> $88.40 <span class="ticker-sep">|</span></div><div class="ticker-item">I AM IRON MAN — T. STARK <span class="ticker-sep">◆</span></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Iron<span>Man</span></a>
+  <ul>
+    <li><a href="#legacy">Legacy</a></li>
+    <li><a href="#intel">Intel</a></li>
+    <li><a href="#briefing">Briefing</a></li><li><a href="#timeline">Timeline</a></li><li><a href="#armory">Armory</a></li><li><a href="#quotes">Quotes</a></li><li><a href="#missions">Missions</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+
+  <!-- HUD OVERLAY -->
+  <div id="hud-overlay">
+    <div class="hud-grid"></div>
+    <div class="hud-scanline"></div>
+    <div class="hud-corner tl"></div>
+    <div class="hud-corner tr"></div>
+    <div class="hud-corner bl"></div>
+    <div class="hud-corner br"></div>
+    <div class="hud-crosshair"></div>
+    <div class="hud-data d1">ARC REACTOR: 100%</div>
+    <div class="hud-data d2">ALT: 4,200 FT</div>
+    <div class="hud-data d3">THREAT LEVEL: HIGH</div>
+    <div class="hud-data d4">JARVIS v3.1 — ONLINE</div>
+    <div class="hud-bar">
+      <div class="hud-bar-row">
+        <div class="hud-bar-label">POWER</div>
+        <div class="hud-bar-track"><div class="hud-bar-fill" style="width:92%;animation-delay:0s;"></div></div>
+      </div>
+      <div class="hud-bar-row">
+        <div class="hud-bar-label">ARMOR</div>
+        <div class="hud-bar-track"><div class="hud-bar-fill" style="width:78%;animation-delay:0.5s;"></div></div>
+      </div>
+      <div class="hud-bar-row">
+        <div class="hud-bar-label">REPULSR</div>
+        <div class="hud-bar-track"><div class="hud-bar-fill" style="width:86%;animation-delay:1s;"></div></div>
+      </div>
+    </div>
+  </div>
+  <!-- PARTICLE CANVAS -->
+  <canvas id="particle-canvas"></canvas>
+
+  <div class="hero-slash"></div>
+  <div class="hero-content">
+    <div class="hero-text reveal">
+      <div class="hero-eyebrow">Stark Industries — Est. 1963</div>
+      <div class="hero-title">Iron<br><span class="outline">Man</span></div>
+      <div class="hero-subtitle">Invincible. Inevitable.</div>
+      <p class="hero-desc">
+        "I am Iron Man." — Three words that changed everything. Billionaire. Genius. Avenger. The man inside the machine is Tony Stark, and the machine is the most advanced weapon ever built.
+      </p>
+      <a href="#legacy" class="btn-primary">Enter the Armory</a>
+      <a href="#briefing" class="btn-secondary">View Briefing</a>
+    </div>
+    <div class="hero-image-col reveal">
+      <div class="hero-img-frame">
+        <div class="speech-bubble">I am Iron Man.</div>
+        <img src="assets/01_classic_comic_ironman.png" alt="Iron Man comic panel" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEGACY PANELS -->
+<section id="legacy" class="flip-section">
+  <div class="section-header reveal">
+    <div class="section-label">Marvel Comics — The Archives</div>
+    <div class="section-title">The Iron Legacy</div>
+  </div>
+  <div class="panels-grid">
+    <div class="panel panel-1">
+      <div class="caption">Classic</div>
+      <img src="assets/01_classic_comic_ironman.png" alt="Classic Iron Man comic art" />
+      <div class="panel-overlay">
+        <div class="panel-overlay-title">The Original Armor</div>
+        <div class="panel-overlay-text">From the halls of Tales of Suspense, the armored Avenger was born.</div>
+      </div>
+    </div>
+    <div class="panel panel-2">
+      <div class="caption">In Action</div>
+      <img src="assets/02_flying_ironman_comic.png" alt="Iron Man flying" />
+      <div class="panel-overlay">
+        <div class="panel-overlay-title">Repulsor Fire</div>
+        <div class="panel-overlay-text">Powered by the arc reactor, no sky is out of reach.</div>
+      </div>
+    </div>
+    <div class="panel panel-3">
+      <div class="caption">Sunset Protocol</div>
+      <img src="assets/03_tony_shades_suit.png" alt="Iron Man at sunset" />
+      <div class="panel-overlay">
+        <div class="panel-overlay-title">Golden Hour</div>
+        <div class="panel-overlay-text">Even a genius needs a moment to breathe.</div>
+      </div>
+    </div>
+    <div class="panel panel-4">
+      <div class="caption">Incognito</div>
+      <img src="assets/04_tony_resting_suit.png" alt="Tony Stark in suit with shades" />
+      <div class="panel-overlay">
+        <div class="panel-overlay-title">Tony Stark</div>
+        <div class="panel-overlay-text">The sharpest mind behind the suit.</div>
+      </div>
+    </div>
+    <div class="panel panel-5">
+      <div class="caption">Off Duty</div>
+      <img src="assets/05_tony_fury_diner.png" alt="Tony Stark resting" />
+      <div class="panel-overlay">
+        <div class="panel-overlay-title">Weight of the World</div>
+        <div class="panel-overlay-text">The burden is real, even for a genius.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WIDE PANEL -->
+<div id="widepanel">
+  <img src="assets/06_tony_solo_scene.png" alt="Tony Stark and Nick Fury" />
+  <div class="widepanel-overlay">
+    <div class="wp-text">
+      <div class="wp-shout">Not<br>Afraid</div>
+      <div class="wp-sub">S.H.I.E.L.D. Intel — Level 7 Clearance</div>
+    </div>
+  </div>
+  <div class="sfx" style="right:60px;bottom:24px;font-size:80px;transform:rotate(-6deg);opacity:0.15">BOOM</div>
+</div>
+
+<!-- INTEL -->
+<section id="intel" class="flip-section">
+  <div class="intel-inner">
+    <div class="intel-img-wrap reveal">
+      <img src="assets/07_sunset_ironman.png" alt="Tony Stark and Nick Fury at the diner" />
+      <div class="intel-tag">S.H.I.E.L.D. File 001-A</div>
+    </div>
+    <div class="intel-text reveal">
+      <div class="intel-issue">Stark Dossier — Eyes Only</div>
+      <div class="intel-quote">
+        Genius.<br><em>Billionaire.</em><br>Playboy.<br>Philanthropist.
+      </div>
+      <p class="intel-body">
+        Tony Stark built the first Iron Man suit in a cave. With scraps. Everything since has been an upgrade. The arc reactor doesn't just power the armor — it keeps the man alive. And that man has never once stopped pushing forward.
+      </p>
+      <div class="stat-row">
+        <div class="stat">
+          <div class="stat-num">50+</div>
+          <div class="stat-label">Armor variants</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">IQ 270</div>
+          <div class="stat-label">Estimated</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">Mk. L</div>
+          <div class="stat-label">Latest suit</div>
+        </div>
+      </div>
+      <a href="#" class="btn-primary">Access full dossier</a>
+    </div>
+  </div>
+</section>
+
+<!-- BRIEFING / CAST -->
+<section id="briefing" class="flip-section">
+  <div class="briefing-inner">
+    <div class="briefing-header reveal">
+      <div class="briefing-title">Mission Briefing</div>
+      <div class="briefing-issue">Marvel Cinematic Universe — Phase 1</div>
+    </div>
+    <div class="cast-row reveal">
+      <div class="cast-card">
+        <img src="assets/04_tony_resting_suit.png" alt="Tony Stark" />
+        <div class="cast-info">
+          <div class="cast-name">Tony Stark</div>
+          <div class="cast-role">Iron Man — Genius / Avenger</div>
+        </div>
+      </div>
+      <div class="cast-card">
+        <img src="assets/06_tony_solo_scene.png" alt="Nick Fury" />
+        <div class="cast-info">
+          <div class="cast-name">Nick Fury</div>
+          <div class="cast-role">Director — S.H.I.E.L.D.</div>
+        </div>
+      </div>
+      <div class="cast-card">
+        <img src="assets/07_sunset_ironman.png" alt="Mission" />
+        <div class="cast-info">
+          <div class="cast-name">The Alliance</div>
+          <div class="cast-role">Stark Industries x S.H.I.E.L.D.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- TIMELINE -->
+<section id="timeline" class="flip-section">
+  <div class="timeline-header">
+    <div style="font-family:'Oswald',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#C0392B;margin-bottom:10px;">Iron Man Through the Ages</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,6vw,72px);color:#0a0000;line-height:0.95;">The Iron Timeline</div>
+    <div style="font-size:12px;color:rgba(10,0,0,0.5);margin-top:10px;font-style:italic;">Drag to scroll through history</div>
+  </div>
+  <div class="timeline-scroll-wrap" id="tl-wrap">
+    <div class="timeline-track">
+
+      <div class="tl-item">
+        <div class="tl-panel-art" style="background:#8B1A1A;display:flex;align-items:center;justify-content:center;">
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:#FFD700;letter-spacing:0.05em;">MK I</span>
+        </div>
+        <div style="position:absolute;top:3px;left:15px;right:15px;height:84px;border:3px solid #0a0000;z-index:1;pointer-events:none;"></div>
+        <div class="tl-dot"></div>
+        <div class="tl-year">1963</div>
+        <div class="tl-badge">Origin</div>
+        <div class="tl-title">Tales of Suspense #39</div>
+        <div class="tl-desc">Tony Stark captured. Built the first suit in captivity to escape.</div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-panel-art" style="background:#5a0e0e;display:flex;align-items:center;justify-content:center;">
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:#FFD700;letter-spacing:0.05em;">SILVER</span>
+        </div>
+        <div style="position:absolute;top:3px;left:15px;right:15px;height:84px;border:3px solid #0a0000;z-index:1;pointer-events:none;"></div>
+        <div class="tl-dot"></div>
+        <div class="tl-year">1960s</div>
+        <div class="tl-badge">Classic</div>
+        <div class="tl-title">Silver Age</div>
+        <div class="tl-desc">The golden armor era begins. Iron Man joins the Avengers.</div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-panel-art" style="background:#1a0505;display:flex;align-items:center;justify-content:center;">
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:#FFD700;letter-spacing:0.03em;">DEMON</span>
+        </div>
+        <div style="position:absolute;top:3px;left:15px;right:15px;height:84px;border:3px solid #0a0000;z-index:1;pointer-events:none;"></div>
+        <div class="tl-dot"></div>
+        <div class="tl-year">1979</div>
+        <div class="tl-badge">Storyline</div>
+        <div class="tl-title">Demon in a Bottle</div>
+        <div class="tl-desc">Tony battles alcoholism in Marvel's landmark storyline.</div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-panel-art" style="background:#8B1A1A;display:flex;align-items:center;justify-content:center;">
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:#FFD700;">WAR MK</span>
+        </div>
+        <div style="position:absolute;top:3px;left:15px;right:15px;height:84px;border:3px solid #0a0000;z-index:1;pointer-events:none;"></div>
+        <div class="tl-dot"></div>
+        <div class="tl-year">1983</div>
+        <div class="tl-badge">War Machine</div>
+        <div class="tl-title">James Rhodes</div>
+        <div class="tl-desc">Rhodey dons the armor as Tony faces personal battles.</div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-panel-art" style="background:#5a0e0e;display:flex;align-items:center;justify-content:center;">
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:16px;color:#FFD700;">EXTREMIS</span>
+        </div>
+        <div style="position:absolute;top:3px;left:15px;right:15px;height:84px;border:3px solid #0a0000;z-index:1;pointer-events:none;"></div>
+        <div class="tl-dot"></div>
+        <div class="tl-year">2005</div>
+        <div class="tl-badge">Extremis</div>
+        <div class="tl-title">Extremis Arc</div>
+        <div class="tl-desc">Tony bonds with the armor at the biological level. The future arrives.</div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-panel-art" style="background:#0a0000;display:flex;align-items:center;justify-content:center;">
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:#FFD700;">MCU MK I</span>
+        </div>
+        <div style="position:absolute;top:3px;left:15px;right:15px;height:84px;border:3px solid #0a0000;z-index:1;pointer-events:none;"></div>
+        <div class="tl-dot"></div>
+        <div class="tl-year">2008</div>
+        <div class="tl-badge">MCU Begins</div>
+        <div class="tl-title">Iron Man (Film)</div>
+        <div class="tl-desc">"I am Iron Man." Tony reveals his identity to the world.</div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-panel-art" style="background:#8B1A1A;display:flex;align-items:center;justify-content:center;">
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:#FFD700;">AVENGERS</span>
+        </div>
+        <div style="position:absolute;top:3px;left:15px;right:15px;height:84px;border:3px solid #0a0000;z-index:1;pointer-events:none;"></div>
+        <div class="tl-dot"></div>
+        <div class="tl-year">2012</div>
+        <div class="tl-badge">Earth's Mightiest</div>
+        <div class="tl-title">The Avengers</div>
+        <div class="tl-desc">Tony flies a nuclear weapon into a wormhole. Nobody asked him to.</div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-panel-art" style="background:#1a0505;display:flex;align-items:center;justify-content:center;">
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:#FFD700;">MK XLII</span>
+        </div>
+        <div style="position:absolute;top:3px;left:15px;right:15px;height:84px;border:3px solid #0a0000;z-index:1;pointer-events:none;"></div>
+        <div class="tl-dot"></div>
+        <div class="tl-year">2013</div>
+        <div class="tl-badge">Iron Man 3</div>
+        <div class="tl-title">Iron Man 3</div>
+        <div class="tl-desc">The Mandarin. The house falls. Tony Stark without the armor.</div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-panel-art" style="background:#5a0e0e;display:flex;align-items:center;justify-content:center;">
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:14px;color:#FFD700;">CIVIL WAR</span>
+        </div>
+        <div style="position:absolute;top:3px;left:15px;right:15px;height:84px;border:3px solid #0a0000;z-index:1;pointer-events:none;"></div>
+        <div class="tl-dot"></div>
+        <div class="tl-year">2016</div>
+        <div class="tl-badge">Divided</div>
+        <div class="tl-title">Civil War</div>
+        <div class="tl-desc">Stark vs Rogers. The Sokovia Accords. Team Iron Man.</div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-panel-art" style="background:#0a0000;display:flex;align-items:center;justify-content:center;">
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:14px;color:#FFD700;text-align:center;line-height:1.1;">INFINITY<br>WAR</span>
+        </div>
+        <div style="position:absolute;top:3px;left:15px;right:15px;height:84px;border:3px solid #0a0000;z-index:1;pointer-events:none;"></div>
+        <div class="tl-dot" style="background:#C0392B;"></div>
+        <div class="tl-year">2018</div>
+        <div class="tl-badge">Infinity War</div>
+        <div class="tl-title">Infinity War</div>
+        <div class="tl-desc">Titan. Thanos. Tony bleeds. Half the universe snapped away.</div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-panel-art" style="background:#8B1A1A;display:flex;align-items:center;justify-content:center;">
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:14px;color:#FFD700;text-align:center;line-height:1.1;">I LOVE<br>3000</span>
+        </div>
+        <div style="position:absolute;top:3px;left:15px;right:15px;height:84px;border:3px solid #0a0000;z-index:1;pointer-events:none;"></div>
+        <div class="tl-dot" style="background:#D4AF37;box-shadow:0 0 10px rgba(255,215,0,0.8);"></div>
+        <div class="tl-year">2019</div>
+        <div class="tl-badge">Endgame</div>
+        <div class="tl-title">Avengers: Endgame</div>
+        <div class="tl-desc">"And I... am... Iron Man." The Snap. The sacrifice. The legacy.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ARMOR DATABASE -->
+<section id="armory" class="flip-section">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:48px;">
+      <div style="font-family:'Oswald',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#C0392B;margin-bottom:10px;">Hover to reveal specs</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,6vw,72px);color:#FFD700;line-height:0.95;text-shadow:3px 3px 0 #5a0e0e;">Armor Database</div>
+    </div>
+    <div class="armory-grid">
+
+      <div class="armor-card"><div class="armor-card-inner">
+        <div class="armor-front">
+          <div class="armor-front-decor"></div>
+          <div class="armor-mark">I</div>
+          <div class="armor-name">Gray Shell</div>
+          <div class="armor-year-badge">1963 / 2008</div>
+        </div>
+        <div class="armor-back">
+          <div>
+            <div class="armor-back-title">Mark I</div>
+            <div class="armor-stat"><span class="armor-stat-key">Weight</span><span class="armor-stat-val">90 lbs</span></div>
+            <div class="armor-stat"><span class="armor-stat-key">Power</span><span class="armor-stat-val">Miniature RT</span></div>
+            <div class="armor-stat"><span class="armor-stat-key">Weapons</span><span class="armor-stat-val">Flamethrowers</span></div>
+            <div class="armor-stat"><span class="armor-stat-key">Speed</span><span class="armor-stat-val">Limited</span></div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#C0392B;font-family:'Oswald',sans-serif;letter-spacing:0.1em;margin-bottom:3px;">POWER LEVEL</div>
+            <div class="armor-grid-bar" style="width:25%;"></div>
+            <div class="armor-back-note">Built in a cave. With a box of scraps.</div>
+          </div>
+        </div>
+      </div></div>
+
+      <div class="armor-card"><div class="armor-card-inner">
+        <div class="armor-front">
+          <div class="armor-front-decor"></div>
+          <div class="armor-mark">III</div>
+          <div class="armor-name">Gold Avenger</div>
+          <div class="armor-year-badge">1964</div>
+        </div>
+        <div class="armor-back">
+          <div>
+            <div class="armor-back-title">Mark III</div>
+            <div class="armor-stat"><span class="armor-stat-key">Color</span><span class="armor-stat-val">Red & Gold</span></div>
+            <div class="armor-stat"><span class="armor-stat-key">Power</span><span class="armor-stat-val">Repulsors</span></div>
+            <div class="armor-stat"><span class="armor-stat-key">Flight</span><span class="armor-stat-val">Jet Boots</span></div>
+            <div class="armor-stat"><span class="armor-stat-key">Debut</span><span class="armor-stat-val">ToS #66</span></div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#C0392B;font-family:'Oswald',sans-serif;letter-spacing:0.1em;margin-bottom:3px;">POWER LEVEL</div>
+            <div class="armor-grid-bar" style="width:45%;"></div>
+            <div class="armor-back-note">The classic red & gold that defined Iron Man.</div>
+          </div>
+        </div>
+      </div></div>
+
+      <div class="armor-card"><div class="armor-card-inner">
+        <div class="armor-front">
+          <div class="armor-front-decor"></div>
+          <div class="armor-mark">VII</div>
+          <div class="armor-name">Avengers Suit</div>
+          <div class="armor-year-badge">2012 MCU</div>
+        </div>
+        <div class="armor-back">
+          <div>
+            <div class="armor-back-title">Mark VII</div>
+            <div class="armor-stat"><span class="armor-stat-key">Deploy</span><span class="armor-stat-val">Bracelet</span></div>
+            <div class="armor-stat"><span class="armor-stat-key">Missiles</span><span class="armor-stat-val">Micro x12</span></div>
+            <div class="armor-stat"><span class="armor-stat-key">Repulsr</span><span class="armor-stat-val">Dual Palm</span></div>
+            <div class="armor-stat"><span class="armor-stat-key">Speed</span><span class="armor-stat-val">Mach 8</span></div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#C0392B;font-family:'Oswald',sans-serif;letter-spacing:0.1em;margin-bottom:3px;">POWER LEVEL</div>
+            <div class="armor-grid-bar" style="width:72%;"></div>
+            <div class="armor-back-note">Survived a nuke through a wormhole.</div>
+          </div>
+        </div>
+      </div></div>
+
+      <div class="armor-card"><div class="armor-card-inner">
+        <div class="armor-front">
+          <div class="armor-front-decor"></div>
+          <div class="armor-mark">XVII</div>
+          <div class="armor-name">Heartbreaker</div>
+          <div class="armor-year-badge">2013 MCU</div>
+        </div>
+        <div class="armor-back">
+          <div>
+            <div class="armor-back-title">Mark XVII</div>
+            <div class="armor-stat"><span class="armor-stat-key">Chest</span><span class="armor-stat-val">Huge RT Beam</span></div>
+            <div class="armor-stat"><span class="armor-stat-key">Role</span><span class="armor-stat-val">Heavy Assault</span></div>
+            <div class="armor-stat"><span class="armor-stat-key">Threat</span><span class="armor-stat-val">Extremis Virus</span></div>
+            <div class="armor-stat"><span class="armor-stat-key">Film</span><span class="armor-stat-val">Iron Man 3</span></div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#C0392B;font-family:'Oswald',sans-serif;letter-spacing:0.1em;margin-bottom:3px;">POWER LEVEL</div>
+            <div class="armor-grid-bar" style="width:78%;"></div>
+            <div class="armor-back-note">The massive chest beam that ends fights.</div>
+          </div>
+        </div>
+      </div></div>
+
+      <div class="armor-card"><div class="armor-card-inner">
+        <div class="armor-front">
+          <div class="armor-front-decor"></div>
+          <div class="armor-mark">XLII</div>
+          <div class="armor-name">Extremis</div>
+          <div class="armor-year-badge">2013 MCU</div>
+        </div>
+        <div class="armor-back">
+          <div>
+            <div class="armor-back-title">Mark XLII</div>
+            <div class="armor-stat"><span class="armor-stat-key">Deploy</span><span class="armor-stat-val">Telepathic</span></div>
+            <div class="armor-stat"><span class="armor-stat-key">Pieces</span><span class="armor-stat-val">Self-assembling</span></div>
+            <div class="armor-stat"><span class="armor-stat-key">Flaw</span><span class="armor-stat-val">Power drain</span></div>
+            <div class="armor-stat"><span class="armor-stat-key">Unique</span><span class="armor-stat-val">Nerve-linked</span></div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#C0392B;font-family:'Oswald',sans-serif;letter-spacing:0.1em;margin-bottom:3px;">POWER LEVEL</div>
+            <div class="armor-grid-bar" style="width:65%;"></div>
+            <div class="armor-back-note">Controlled by thought. Unreliable but revolutionary.</div>
+          </div>
+        </div>
+      </div></div>
+
+      <div class="armor-card"><div class="armor-card-inner">
+        <div class="armor-front">
+          <div class="armor-front-decor"></div>
+          <div class="armor-mark">XLV</div>
+          <div class="armor-name">Silver Centurion</div>
+          <div class="armor-year-badge">2015 MCU</div>
+        </div>
+        <div class="armor-back">
+          <div>
+            <div class="armor-back-title">Mark XLV</div>
+            <div class="armor-stat"><span class="armor-stat-key">Used</span><span class="armor-stat-val">Age of Ultron</span></div>
+            <div class="armor-stat"><span class="armor-stat-key">vs</span><span class="armor-stat-val">Ultron Prime</span></div>
+            <div class="armor-stat"><span class="armor-stat-key">Mode</span><span class="armor-stat-val">Nano-enhanced</span></div>
+            <div class="armor-stat"><span class="armor-stat-key">Speed</span><span class="armor-stat-val">Mach 10</span></div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#C0392B;font-family:'Oswald',sans-serif;letter-spacing:0.1em;margin-bottom:3px;">POWER LEVEL</div>
+            <div class="armor-grid-bar" style="width:83%;"></div>
+            <div class="armor-back-note">Upgraded for the Ultron threat level.</div>
+          </div>
+        </div>
+      </div></div>
+
+      <div class="armor-card"><div class="armor-card-inner">
+        <div class="armor-front">
+          <div class="armor-front-decor"></div>
+          <div class="armor-mark">XLVI</div>
+          <div class="armor-name">Civil War</div>
+          <div class="armor-year-badge">2016 MCU</div>
+        </div>
+        <div class="armor-back">
+          <div>
+            <div class="armor-back-title">Mark XLVI</div>
+            <div class="armor-stat"><span class="armor-stat-key">vs</span><span class="armor-stat-val">Captain America</span></div>
+            <div class="armor-stat"><span class="armor-stat-key">Vision</span><span class="armor-stat-val">Enhanced HUD</span></div>
+            <div class="armor-stat"><span class="armor-stat-key">Damage</span><span class="armor-stat-val">Arc reactor</span></div>
+            <div class="armor-stat"><span class="armor-stat-key">Film</span><span class="armor-stat-val">Civil War</span></div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#C0392B;font-family:'Oswald',sans-serif;letter-spacing:0.1em;margin-bottom:3px;">POWER LEVEL</div>
+            <div class="armor-grid-bar" style="width:87%;"></div>
+            <div class="armor-back-note">Battle-damaged but never stopped fighting.</div>
+          </div>
+        </div>
+      </div></div>
+
+      <div class="armor-card"><div class="armor-card-inner">
+        <div class="armor-front">
+          <div class="armor-front-decor"></div>
+          <div class="armor-mark">L</div>
+          <div class="armor-name">Nanotech</div>
+          <div class="armor-year-badge">2018 MCU</div>
+        </div>
+        <div class="armor-back">
+          <div>
+            <div class="armor-back-title">Mark L</div>
+            <div class="armor-stat"><span class="armor-stat-key">Material</span><span class="armor-stat-val">Nanobots</span></div>
+            <div class="armor-stat"><span class="armor-stat-key">Deploy</span><span class="armor-stat-val">Chest RT</span></div>
+            <div class="armor-stat"><span class="armor-stat-key">Weapons</span><span class="armor-stat-val">Adaptive</span></div>
+            <div class="armor-stat"><span class="armor-stat-key">vs</span><span class="armor-stat-val">Thanos (Titan)</span></div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#C0392B;font-family:'Oswald',sans-serif;letter-spacing:0.1em;margin-bottom:3px;">POWER LEVEL</div>
+            <div class="armor-grid-bar" style="width:94%;"></div>
+            <div class="armor-back-note">Made Thanos bleed. The most advanced suit ever.</div>
+          </div>
+        </div>
+      </div></div>
+
+      <div class="armor-card"><div class="armor-card-inner">
+        <div class="armor-front" style="background:#3a0000;">
+          <div class="armor-front-decor"></div>
+          <div class="armor-mark" style="color:#fff;font-size:40px;line-height:1.1;">LXXXV</div>
+          <div class="armor-name">Endgame Gauntlet</div>
+          <div class="armor-year-badge">2023 MCU</div>
+        </div>
+        <div class="armor-back">
+          <div>
+            <div class="armor-back-title">Mark LXXXV</div>
+            <div class="armor-stat"><span class="armor-stat-key">Special</span><span class="armor-stat-val">Infinity Stones</span></div>
+            <div class="armor-stat"><span class="armor-stat-key">Result</span><span class="armor-stat-val">Thanos — Erased</span></div>
+            <div class="armor-stat"><span class="armor-stat-key">Cost</span><span class="armor-stat-val">Tony Stark</span></div>
+            <div class="armor-stat"><span class="armor-stat-key">Legacy</span><span class="armor-stat-val">Eternal</span></div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#C0392B;font-family:'Oswald',sans-serif;letter-spacing:0.1em;margin-bottom:3px;">POWER LEVEL</div>
+            <div class="armor-grid-bar" style="width:100%;background:#fff;"></div>
+            <div class="armor-back-note">The last suit Tony Stark ever wore.</div>
+          </div>
+        </div>
+      </div></div>
+
+    </div>
+  </div>
+</section>
+
+<!-- QUOTES WALL -->
+<section id="quotes" class="flip-section">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:60px;">
+      <div style="font-family:'Oswald',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#C0392B;margin-bottom:10px;">Tony Stark — Words That Hit Different</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,6vw,72px);color:#0a0000;line-height:0.95;text-shadow:3px 3px 0 rgba(139,26,26,0.2);">The Stark Files</div>
+    </div>
+    <div class="quotes-grid">
+
+      <div class="quote-bubble" style="transition-delay:0s;">
+        <div class="quote-num">01</div>
+        <div class="quote-text">I am Iron Man.</div>
+        <div class="quote-attr">— Tony Stark, Iron Man (2008) & Endgame (2019)</div>
+        <div class="quote-avatar">TS</div>
+      </div>
+
+      <div class="quote-bubble alt" style="transition-delay:0.1s;margin-top:30px;">
+        <div class="quote-num">02</div>
+        <div class="quote-text">Genius. Billionaire. Playboy. Philanthropist.</div>
+        <div class="quote-attr">— Tony Stark, The Avengers (2012)</div>
+        <div class="quote-avatar">TS</div>
+      </div>
+
+      <div class="quote-bubble" style="transition-delay:0.2s;">
+        <div class="quote-num">03</div>
+        <div class="quote-text">Part of the journey is the end.</div>
+        <div class="quote-attr">— Tony Stark, Avengers: Endgame (2019)</div>
+        <div class="quote-avatar">TS</div>
+      </div>
+
+      <div class="quote-bubble alt" style="margin-top:60px;transition-delay:0.15s;">
+        <div class="quote-num">04</div>
+        <div class="quote-text">I'd be the world's most interesting man if it wasn't for Natasha Romanoff.</div>
+        <div class="quote-attr">— Tony Stark, Iron Man 2 (2010)</div>
+        <div class="quote-avatar">TS</div>
+      </div>
+
+      <div class="quote-bubble" style="margin-top:60px;transition-delay:0.25s;">
+        <div class="quote-num">05</div>
+        <div class="quote-text">If we can't protect the Earth, you can be damn well sure we'll avenge it.</div>
+        <div class="quote-attr">— Tony Stark, The Avengers (2012)</div>
+        <div class="quote-avatar">TS</div>
+      </div>
+
+      <div class="quote-bubble alt" style="margin-top:60px;transition-delay:0.3s;">
+        <div class="quote-num">06</div>
+        <div class="quote-text">I love you 3000.</div>
+        <div class="quote-attr">— Morgan Stark / Tony Stark, Endgame (2019)</div>
+        <div class="quote-avatar">MS</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- MISSIONS LOG -->
+<section id="missions" class="flip-section">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:48px;">
+      <div style="font-family:'Oswald',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#C0392B;margin-bottom:10px;">S.H.I.E.L.D. Mission Archives — Level 7</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,6vw,72px);color:#FFD700;line-height:0.95;text-shadow:3px 3px 0 #5a0e0e;">Missions Log</div>
+    </div>
+    <div class="missions-grid">
+
+      <div class="mission-card">
+        <div class="mission-status">Complete</div>
+        <div class="mission-number">Mission 001</div>
+        <div class="mission-title">Iron Man</div>
+        <div class="mission-year">Phase 1 — 2008</div>
+        <div class="mission-desc">Escape captivity. Eliminate weapons traffickers. Reveal identity to world press.</div>
+        <div class="mission-divider"></div>
+        <div class="mission-threat"><span class="mission-threat-label">Threat</span><div class="threat-dots"><div class="threat-dot on"></div><div class="threat-dot on"></div><div class="threat-dot"></div><div class="threat-dot"></div><div class="threat-dot"></div></div></div>
+        <div class="mission-tags" style="margin-top:10px;"><div class="mission-tag">Origin</div><div class="mission-tag">Obadiah Stane</div><div class="mission-tag">Mark I</div></div>
+      </div>
+
+      <div class="mission-card">
+        <div class="mission-status">Complete</div>
+        <div class="mission-number">Mission 002</div>
+        <div class="mission-title">Iron Man 2</div>
+        <div class="mission-year">Phase 1 — 2010</div>
+        <div class="mission-desc">Survive palladium poisoning. Defeat Ivan Vanko. Neutralize Hammer drones. Eat donuts.</div>
+        <div class="mission-divider"></div>
+        <div class="mission-threat"><span class="mission-threat-label">Threat</span><div class="threat-dots"><div class="threat-dot on"></div><div class="threat-dot on"></div><div class="threat-dot on"></div><div class="threat-dot"></div><div class="threat-dot"></div></div></div>
+        <div class="mission-tags" style="margin-top:10px;"><div class="mission-tag">Whiplash</div><div class="mission-tag">S.H.I.E.L.D.</div><div class="mission-tag">War Machine</div></div>
+      </div>
+
+      <div class="mission-card">
+        <div class="mission-status">Complete</div>
+        <div class="mission-number">Mission 003</div>
+        <div class="mission-title">The Avengers</div>
+        <div class="mission-year">Phase 1 — 2012</div>
+        <div class="mission-desc">Assemble Earth's mightiest heroes. Close the Tesseract portal. Survive a nuke.</div>
+        <div class="mission-divider"></div>
+        <div class="mission-threat"><span class="mission-threat-label">Threat</span><div class="threat-dots"><div class="threat-dot on"></div><div class="threat-dot on"></div><div class="threat-dot on"></div><div class="threat-dot on"></div><div class="threat-dot"></div></div></div>
+        <div class="mission-tags" style="margin-top:10px;"><div class="mission-tag">Loki</div><div class="mission-tag">Chitauri</div><div class="mission-tag">Mark VII</div></div>
+      </div>
+
+      <div class="mission-card">
+        <div class="mission-status">Complete</div>
+        <div class="mission-number">Mission 004</div>
+        <div class="mission-title">Iron Man 3</div>
+        <div class="mission-year">Phase 2 — 2013</div>
+        <div class="mission-desc">Defeat the Mandarin. Destroy every suit. Prove the man matters more than the machine.</div>
+        <div class="mission-divider"></div>
+        <div class="mission-threat"><span class="mission-threat-label">Threat</span><div class="threat-dots"><div class="threat-dot on"></div><div class="threat-dot on"></div><div class="threat-dot on"></div><div class="threat-dot"></div><div class="threat-dot"></div></div></div>
+        <div class="mission-tags" style="margin-top:10px;"><div class="mission-tag">Extremis</div><div class="mission-tag">Aldrich Killian</div><div class="mission-tag">PTSD</div></div>
+      </div>
+
+      <div class="mission-card">
+        <div class="mission-status">Complete</div>
+        <div class="mission-number">Mission 005</div>
+        <div class="mission-title">Civil War</div>
+        <div class="mission-year">Phase 3 — 2016</div>
+        <div class="mission-desc">Sokovia Accords. Fight your best friend. Discover the truth about your parents.</div>
+        <div class="mission-divider"></div>
+        <div class="mission-threat"><span class="mission-threat-label">Threat</span><div class="threat-dots"><div class="threat-dot on"></div><div class="threat-dot on"></div><div class="threat-dot on"></div><div class="threat-dot on"></div><div class="threat-dot"></div></div></div>
+        <div class="mission-tags" style="margin-top:10px;"><div class="mission-tag">Cap vs Tony</div><div class="mission-tag">Zemo</div><div class="mission-tag">Mk XLVI</div></div>
+      </div>
+
+      <div class="mission-card">
+        <div class="mission-status">Complete</div>
+        <div class="mission-number">Mission 006</div>
+        <div class="mission-title">Infinity War</div>
+        <div class="mission-year">Phase 3 — 2018</div>
+        <div class="mission-desc">Travel to Titan. Face Thanos. Survive. Watch half the universe disappear.</div>
+        <div class="mission-divider"></div>
+        <div class="mission-threat"><span class="mission-threat-label">Threat</span><div class="threat-dots"><div class="threat-dot on"></div><div class="threat-dot on"></div><div class="threat-dot on"></div><div class="threat-dot on"></div><div class="threat-dot on"></div></div></div>
+        <div class="mission-tags" style="margin-top:10px;"><div class="mission-tag">Thanos</div><div class="mission-tag">Titan</div><div class="mission-tag">Mark L</div></div>
+      </div>
+
+      <div class="mission-card" style="grid-column:span 2;">
+        <div class="mission-status active">Legendary</div>
+        <div class="mission-number">Mission 007 — Final</div>
+        <div class="mission-title">Endgame</div>
+        <div class="mission-year">Phase 3 — 2023</div>
+        <div class="mission-desc">Time heist. Retrieve the stones. Build the gauntlet. Snap Thanos and his army out of existence. Save the universe. Give everything.</div>
+        <div class="mission-divider"></div>
+        <div class="mission-threat"><span class="mission-threat-label">Threat</span><div class="threat-dots"><div class="threat-dot on"></div><div class="threat-dot on"></div><div class="threat-dot on"></div><div class="threat-dot on"></div><div class="threat-dot on"></div></div></div>
+        <div class="mission-tags" style="margin-top:10px;"><div class="mission-tag">Time Heist</div><div class="mission-tag">Infinity Gauntlet</div><div class="mission-tag">Mark LXXXV</div><div class="mission-tag">I Love You 3000</div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- STARK LAB & SUIT SHOWCASE -->
+<section id="stark-lab" class="flip-section" style="background:var(--ink);padding:0;border-top:6px solid #8B1A1A;border-bottom:6px solid #8B1A1A;">
+  <div style="display:grid;grid-template-columns:1fr 1fr;min-height:560px;">
+
+    <!-- Left: Tony at computer -->
+    <div style="position:relative;overflow:hidden;border-right:4px solid #8B1A1A;">
+      <img src="assets/08_randys_donuts.png" alt="Tony Stark lab" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;filter:contrast(1.08) saturate(1.05);transition:transform 0.4s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'" />
+      <!-- overlay gradient -->
+      <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(10,0,0,0.85) 0%, rgba(10,0,0,0.2) 50%, transparent 100%);pointer-events:none;"></div>
+      <!-- caption box -->
+      <div style="position:absolute;bottom:0;left:0;right:0;padding:28px 28px 24px;">
+        <div style="font-family:'Oswald',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.2em;color:#C0392B;text-transform:uppercase;margin-bottom:6px;">Stark Industries R&D</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:38px;color:#FFD700;line-height:0.95;text-shadow:2px 2px 0 #5a0e0e;margin-bottom:8px;">The Workshop</div>
+        <div style="font-size:12px;color:rgba(245,237,224,0.65);line-height:1.6;max-width:320px;">Where every breakthrough begins. Tony Stark's lab — the most advanced private research facility on the planet.</div>
+      </div>
+      <!-- comic caption top -->
+      <div style="position:absolute;top:16px;left:16px;background:#FFD700;color:#0a0000;font-family:'Oswald',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.1em;padding:4px 12px;border:1px solid #0a0000;text-transform:uppercase;">Classified</div>
+    </div>
+
+    <!-- Right: Tony outside in suit -->
+    <div style="position:relative;overflow:hidden;">
+      <img src="assets/09_air_avengers_flying.png" alt="Tony Stark suited" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;filter:contrast(1.06) saturate(1.08);transition:transform 0.4s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'" />
+      <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(10,0,0,0.85) 0%, rgba(10,0,0,0.15) 50%, transparent 100%);pointer-events:none;"></div>
+      <div style="position:absolute;bottom:0;left:0;right:0;padding:28px 28px 24px;">
+        <div style="font-family:'Oswald',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.2em;color:#C0392B;text-transform:uppercase;margin-bottom:6px;">Tony Stark — CEO</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:38px;color:#FFD700;line-height:0.95;text-shadow:2px 2px 0 #5a0e0e;margin-bottom:8px;">The Man</div>
+        <div style="font-size:12px;color:rgba(245,237,224,0.65);line-height:1.6;max-width:320px;">Billionaire by day. The sharpest mind in any room. The man who built a suit in a cave — and never stopped improving it.</div>
+      </div>
+      <div style="position:absolute;top:16px;left:16px;background:#8B1A1A;color:#FFD700;font-family:'Oswald',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.1em;padding:4px 12px;border:1px solid #FFD700;text-transform:uppercase;">Tony Stark</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- HELMET DIPTYCH -->
+<section id="helmet-showcase" class="flip-section" style="background:#050000;padding:0;border-bottom:6px solid #8B1A1A;">
+  <div style="display:grid;grid-template-columns:1fr 1fr;min-height:520px;">
+
+    <!-- Helmet dark -->
+    <div style="position:relative;overflow:hidden;border-right:3px solid #8B1A1A;">
+      <img src="assets/10_red_armor_portrait.png" alt="Iron Man helmet" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;filter:contrast(1.1) saturate(0.9);transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" />
+      <!-- dark vignette -->
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center, transparent 40%, rgba(10,0,0,0.6) 100%);pointer-events:none;"></div>
+      <!-- speech bubble style caption -->
+      <div style="position:absolute;bottom:32px;left:32px;background:white;border:3px solid #0a0000;padding:14px 18px;max-width:220px;">
+        <div style="font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;color:#0a0000;line-height:1.4;">Suit up. The world won't save itself.</div>
+        <div style="position:absolute;bottom:-18px;left:20px;border:9px solid transparent;border-top:18px solid #0a0000;"></div>
+        <div style="position:absolute;bottom:-12px;left:23px;border:6px solid transparent;border-top:12px solid white;z-index:1;"></div>
+      </div>
+      <div style="position:absolute;top:16px;right:16px;background:#0a0000;color:#FFD700;font-family:'Oswald',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.14em;padding:4px 12px;border:1px solid #FFD700;text-transform:uppercase;">Mark III</div>
+    </div>
+
+    <!-- Helmet glowing -->
+    <div style="position:relative;overflow:hidden;">
+      <img src="assets/11_i_am_ironman_comic.png" alt="Iron Man helmet glowing" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;filter:contrast(1.12) saturate(1.1);transition:transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" />
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center, rgba(0,100,200,0.08) 30%, rgba(10,0,0,0.5) 100%);pointer-events:none;"></div>
+      <!-- Gold bar bottom stat -->
+      <div style="position:absolute;bottom:0;left:0;right:0;background:rgba(10,0,0,0.88);border-top:3px solid #FFD700;padding:16px 24px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+        <div style="text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:#FFD700;line-height:1;">Mach 3</div>
+          <div style="font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:0.12em;color:rgba(255,215,0,0.45);text-transform:uppercase;">Top Speed</div>
+        </div>
+        <div style="text-align:center;border-left:1px solid rgba(255,215,0,0.2);border-right:1px solid rgba(255,215,0,0.2);">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:#FFD700;line-height:1;">3 GJ</div>
+          <div style="font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:0.12em;color:rgba(255,215,0,0.45);text-transform:uppercase;">Arc Output</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:#FFD700;line-height:1;">100%</div>
+          <div style="font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:0.12em;color:rgba(255,215,0,0.45);text-transform:uppercase;">Systems</div>
+        </div>
+      </div>
+      <div style="position:absolute;top:16px;left:16px;background:#FFD700;color:#0a0000;font-family:'Oswald',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.1em;padding:4px 12px;border:1px solid #0a0000;text-transform:uppercase;">Online</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- HOLOGRAM PANELS -->
+<section id="holo-panels" class="flip-section">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:40px;">
+      <div style="font-family:'Oswald',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#C0392B;margin-bottom:10px;">Move your mouse — feel the depth</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,6vw,72px);color:#0a0000;line-height:0.95;text-shadow:3px 3px 0 rgba(139,26,26,0.2);">Holographic Panels</div>
+    </div>
+    <div class="holo-grid" id="holo-grid">
+      <div class="holo-card" data-depth="8">
+        <img src="assets/01_classic_comic_ironman.png" alt="panel" />
+        <div class="holo-shine"></div><div class="holo-border"></div>
+        <div style="position:absolute;top:10px;left:10px;background:#FFD700;color:#0a0000;font-family:'Oswald',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.08em;padding:4px 10px;border:1px solid #0a0000;text-transform:uppercase;">Classic</div>
+      </div>
+      <div class="holo-card" data-depth="14">
+        <img src="assets/02_flying_ironman_comic.png" alt="panel" />
+        <div class="holo-shine"></div><div class="holo-border"></div>
+        <div style="position:absolute;top:10px;left:10px;background:#FFD700;color:#0a0000;font-family:'Oswald',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.08em;padding:4px 10px;border:1px solid #0a0000;text-transform:uppercase;">In Flight</div>
+      </div>
+      <div class="holo-card" data-depth="8">
+        <img src="assets/04_tony_resting_suit.png" alt="panel" />
+        <div class="holo-shine"></div><div class="holo-border"></div>
+        <div style="position:absolute;top:10px;left:10px;background:#FFD700;color:#0a0000;font-family:'Oswald',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.08em;padding:4px 10px;border:1px solid #0a0000;text-transform:uppercase;">Incognito</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JARVIS TELEMETRY -->
+<section id="telemetry" class="flip-section">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:48px;">
+      <div style="font-family:'Oswald',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#C0392B;margin-bottom:10px;">Real-time Suit Telemetry</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,6vw,72px);color:#FFD700;line-height:0.95;text-shadow:3px 3px 0 #5a0e0e;">JARVIS Monitor</div>
+    </div>
+    <div class="telem-grid">
+
+      <div class="telem-panel">
+        <div class="telem-title"><div class="telem-dot"></div>Altitude</div>
+        <div class="telem-value" id="tel-alt">4,287</div>
+        <div class="telem-unit">Feet ASL</div>
+        <canvas class="telem-chart" id="chart-alt" width="400" height="80"></canvas>
+      </div>
+
+      <div class="telem-panel">
+        <div class="telem-title"><div class="telem-dot"></div>Velocity</div>
+        <div class="telem-value" id="tel-spd">812</div>
+        <div class="telem-unit">MPH — Mach 1.07</div>
+        <canvas class="telem-chart" id="chart-spd" width="400" height="80"></canvas>
+      </div>
+
+      <div class="telem-panel">
+        <div class="telem-title"><div class="telem-dot"></div>Systems Status</div>
+        <div class="telem-bar-wrap">
+          <div class="telem-bar-row">
+            <div class="telem-bar-label">Arc Power</div>
+            <div class="telem-bar-outer"><div class="telem-bar-inner" id="bar-arc" style="width:96%"></div></div>
+            <div class="telem-bar-val" id="bv-arc">96%</div>
+          </div>
+          <div class="telem-bar-row">
+            <div class="telem-bar-label">Armor</div>
+            <div class="telem-bar-outer"><div class="telem-bar-inner" id="bar-arm" style="width:84%"></div></div>
+            <div class="telem-bar-val" id="bv-arm">84%</div>
+          </div>
+          <div class="telem-bar-row">
+            <div class="telem-bar-label">Repulsor</div>
+            <div class="telem-bar-outer"><div class="telem-bar-inner" id="bar-rep" style="width:91%"></div></div>
+            <div class="telem-bar-val" id="bv-rep">91%</div>
+          </div>
+          <div class="telem-bar-row">
+            <div class="telem-bar-label">Shield</div>
+            <div class="telem-bar-outer"><div class="telem-bar-inner" id="bar-shd" style="width:77%"></div></div>
+            <div class="telem-bar-val" id="bv-shd">77%</div>
+          </div>
+          <div class="telem-bar-row">
+            <div class="telem-bar-label">JARVIS</div>
+            <div class="telem-bar-outer"><div class="telem-bar-inner" id="bar-jar" style="width:100%"></div></div>
+            <div class="telem-bar-val" id="bv-jar">100%</div>
+          </div>
+          <div class="telem-bar-row">
+            <div class="telem-bar-label">Nanobots</div>
+            <div class="telem-bar-outer"><div class="telem-bar-inner" id="bar-nan" style="width:88%"></div></div>
+            <div class="telem-bar-val" id="bv-nan">88%</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="telem-panel">
+        <div class="telem-title"><div class="telem-dot"></div>Threat Assessment</div>
+        <div style="margin-top:8px;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:36px;color:#e53935;" id="tel-threat">ELEVATED</div>
+          <div style="font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:0.14em;color:rgba(255,215,0,0.4);text-transform:uppercase;margin-bottom:16px;" id="tel-threat-sub">Multiple hostiles detected — Sector 7G</div>
+        </div>
+        <canvas class="telem-chart" id="chart-thr" width="400" height="80"></canvas>
+        <div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div style="text-align:center;border:1px solid rgba(255,215,0,0.15);padding:8px;">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:24px;color:#FFD700;" id="tel-targets">7</div>
+            <div style="font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:0.1em;color:rgba(255,215,0,0.4);text-transform:uppercase;">Targets</div>
+          </div>
+          <div style="text-align:center;border:1px solid rgba(255,215,0,0.15);padding:8px;">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:24px;color:#e53935;" id="tel-hostile">3</div>
+            <div style="font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:0.1em;color:rgba(255,215,0,0.4);text-transform:uppercase;">Hostile</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- NEW PANELS SECTION -->
+<section style="background:#0d0000;border-top:6px solid #0a0000;">
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;padding:6px;border-bottom:6px solid #0a0000;">
+
+    <!-- Randy's Donuts -->
+    <div class="panel" style="height:360px;border:4px solid #0a0000;position:relative;overflow:hidden;cursor:pointer;">
+      <div class="caption">Randy's</div>
+      <img src="assets/12_explosion_comic.png" alt="Randy's Donuts Iron Man" style="width:100%;height:100%;object-fit:cover;display:block;filter:contrast(1.05) saturate(1.05);transition:transform 0.3s;" />
+      <div class="panel-overlay" style="position:absolute;inset:0;background:rgba(139,26,26,0.75);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;transition:opacity 0.25s;padding:20px;">
+        <div class="panel-overlay-title" style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:#FFD700;text-align:center;letter-spacing:0.08em;margin-bottom:8px;">Exit the Donut, Sir</div>
+        <div class="panel-overlay-text" style="font-size:13px;color:#f5ede0;text-align:center;line-height:1.5;">Tony Stark found at Randy's Donuts. As usual.</div>
+      </div>
+    </div>
+
+    <!-- Flying comic -->
+    <div class="panel" style="height:360px;border:4px solid #0a0000;position:relative;overflow:hidden;cursor:pointer;">
+      <div class="caption" style="position:absolute;background:#FFD700;color:#0a0000;font-family:'Oswald',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:5px 10px;z-index:2;top:10px;left:10px;border:1px solid #0a0000;">Air Avengers</div>
+      <img src="assets/13_starboy.png" alt="Iron Man flying comic" style="width:100%;height:100%;object-fit:cover;display:block;filter:contrast(1.05);transition:transform 0.3s;" />
+      <div class="panel-overlay" style="position:absolute;inset:0;background:rgba(139,26,26,0.75);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;transition:opacity 0.25s;padding:20px;">
+        <div class="panel-overlay-title" style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:#FFD700;text-align:center;letter-spacing:0.08em;margin-bottom:8px;">Fly the Friendly Skies</div>
+        <div class="panel-overlay-text" style="font-size:13px;color:#f5ede0;text-align:center;line-height:1.5;">So sit back and fly the friendly skies with Air Avengers.</div>
+      </div>
+    </div>
+
+    <!-- Starboy -->
+    <div class="panel" style="height:360px;border:4px solid #0a0000;position:relative;overflow:hidden;cursor:pointer;">
+      <div class="caption" style="position:absolute;background:#FFD700;color:#0a0000;font-family:'Oswald',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:5px 10px;z-index:2;top:10px;left:10px;border:1px solid #0a0000;">Starboy</div>
+      <img src="assets/14_spidey_ironman.png" alt="Starboy Iron Man" style="width:100%;height:100%;object-fit:cover;display:block;filter:contrast(1.08) saturate(1.1);transition:transform 0.3s;" />
+      <div class="panel-overlay" style="position:absolute;inset:0;background:rgba(139,26,26,0.75);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;transition:opacity 0.25s;padding:20px;">
+        <div class="panel-overlay-title" style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:#FFD700;text-align:center;letter-spacing:0.08em;margin-bottom:8px;">The Iron Silhouette</div>
+        <div class="panel-overlay-text" style="font-size:13px;color:#f5ede0;text-align:center;line-height:1.5;">Dark. Deliberate. Unstoppable.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPLOSION WIDE PANEL -->
+<div style="position:relative;height:420px;overflow:hidden;border-bottom:6px solid #0a0000;">
+  <img src="assets/15_tony_lab_computer.png" alt="Iron Man explosion" style="width:100%;height:100%;object-fit:cover;object-position:center 60%;display:block;filter:contrast(1.1) saturate(1.15);transform:rotate(-90deg) scale(2.2);transform-origin:center center;" />
+  <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,0,0,0.82) 25%,transparent 65%);display:flex;align-items:center;padding:60px;">
+    <div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,8vw,96px);line-height:0.95;color:#FFD700;text-shadow:3px 3px 0 #5a0e0e;margin-bottom:10px;">Full<br>Power</div>
+      <div style="font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;letter-spacing:0.16em;color:#C0392B;text-transform:uppercase;">Repulsor Blast — Mark VII Active</div>
+    </div>
+  </div>
+  <div style="position:absolute;right:50px;bottom:20px;font-family:'Bebas Neue',sans-serif;font-size:90px;color:rgba(255,215,0,0.1);line-height:1;pointer-events:none;letter-spacing:-0.02em;">KA-BOOM</div>
+</div>
+
+<!-- RED ARMOR + SPIDEY + I AM IRON MAN -->
+<section style="background:#f5ede0;border-top:0;border-bottom:6px solid #0a0000;">
+  <div style="max-width:1100px;margin:0 auto;padding:60px 40px;">
+    <div style="text-align:center;margin-bottom:48px;">
+      <div style="font-family:'Oswald',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#C0392B;margin-bottom:10px;">Marvel Archives — Additional Files</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,6vw,72px);color:#0a0000;line-height:0.95;text-shadow:3px 3px 0 rgba(139,26,26,0.2);">More From the Armory</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;border:4px solid #0a0000;">
+
+      <!-- Red armor portrait -->
+      <div style="position:relative;overflow:hidden;border-right:4px solid #0a0000;cursor:pointer;">
+        <div style="position:absolute;background:#FFD700;color:#0a0000;font-family:'Oswald',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:5px 10px;z-index:2;top:10px;left:10px;border:1px solid #0a0000;">Mark Profile</div>
+        <img src="assets/16_helmet_dark.png" alt="Red armor portrait" style="width:100%;height:300px;object-fit:cover;object-position:center top;display:block;filter:contrast(1.08);transition:transform 0.3s;" />
+        <div style="background:#0a0000;padding:14px 16px;border-top:3px solid #FFD700;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:#FFD700;letter-spacing:0.06em;margin-bottom:2px;">The Red Armor</div>
+          <div style="font-family:'Oswald',sans-serif;font-size:10px;font-weight:600;letter-spacing:0.14em;color:#C0392B;text-transform:uppercase;">Suit-up — Close Quarter</div>
+        </div>
+      </div>
+
+      <!-- I AM IRON MAN composite -->
+      <div style="position:relative;overflow:hidden;border-right:4px solid #0a0000;cursor:pointer;">
+        <div style="position:absolute;background:#FFD700;color:#0a0000;font-family:'Oswald',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:5px 10px;z-index:2;top:10px;left:10px;border:1px solid #0a0000;">I Am</div>
+        <img src="assets/17_tony_suit_outside.png" alt="I Am Iron Man" style="width:100%;height:300px;object-fit:cover;object-position:center top;display:block;filter:contrast(1.05);transition:transform 0.3s;" />
+        <div style="background:#0a0000;padding:14px 16px;border-top:3px solid #FFD700;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:#FFD700;letter-spacing:0.06em;margin-bottom:2px;">I Am Iron Man</div>
+          <div style="font-family:'Oswald',sans-serif;font-size:10px;font-weight:600;letter-spacing:0.14em;color:#C0392B;text-transform:uppercase;">The Declaration — 2008</div>
+        </div>
+      </div>
+
+      <!-- Spidey + Iron Man -->
+      <div style="position:relative;overflow:hidden;cursor:pointer;">
+        <div style="position:absolute;background:#FFD700;color:#0a0000;font-family:'Oswald',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:5px 10px;z-index:2;top:10px;left:10px;border:1px solid #0a0000;">Mentor</div>
+        <img src="assets/18_helmet_glowing.png" alt="Iron Man and Spider-Man" style="width:100%;height:300px;object-fit:cover;object-position:center top;display:block;filter:contrast(1.05);transition:transform 0.3s;" />
+        <div style="background:#0a0000;padding:14px 16px;border-top:3px solid #FFD700;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:#FFD700;letter-spacing:0.06em;margin-bottom:2px;">Iron Man x Spider-Man</div>
+          <div style="font-family:'Oswald',sans-serif;font-size:10px;font-weight:600;letter-spacing:0.14em;color:#C0392B;text-transform:uppercase;">The Mentor & the Kid</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- FIXED BUTTONS -->
+<button id="destroy-btn" onclick="triggerDestruction()">Destroy Mode</button>
+<button id="jarvis-voice-btn" onclick="jarvisSpeak()">JARVIS Speak</button>
+<button id="hum-btn" onclick="toggleHum()">Hum: OFF</button>
+
+<!-- CRACK OVERLAY -->
+<div id="crack-overlay">
+  <svg id="crack-svg" viewBox="0 0 1440 900" preserveAspectRatio="none">
+    <defs>
+      <filter id="glow-crack">
+        <feGaussianBlur stdDeviation="2" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+    <g id="crack-lines" filter="url(#glow-crack)" opacity="0">
+      <path d="M720,450 L580,200 L520,50 M720,450 L820,180 L900,20 M720,450 L400,600 L200,800 L100,900 M720,450 L950,700 L1100,900 M720,450 L300,400 L50,350 M720,450 L1200,380 L1440,300" stroke="#FFD700" stroke-width="2" fill="none"/>
+      <path d="M720,450 L600,700 L500,900 M720,450 L850,600 L1000,800" stroke="#C0392B" stroke-width="1.5" fill="none"/>
+      <circle cx="720" cy="450" r="40" fill="none" stroke="#FFD700" stroke-width="3" opacity="0.8"/>
+      <circle cx="720" cy="450" r="80" fill="none" stroke="#FFD700" stroke-width="1" opacity="0.4"/>
+    </g>
+    <rect id="crack-flash" width="1440" height="900" fill="#FFD700" opacity="0"/>
+  </svg>
+</div>
+
+<!-- REBOOT SCREEN -->
+<div id="reboot-screen">
+  <div class="reboot-text">REBOOTING</div>
+  <div class="reboot-sub">Suit systems restoring...</div>
+</div>
+
+<!-- EASTER EGG -->
+<div id="easter-egg" onclick="closeEasterEgg()">
+  <canvas id="ee-canvas"></canvas>
+  <div class="ee-title">I AM<br>IRON MAN</div>
+  <div class="ee-close">Click anywhere to close</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Stark Industries</div>
+  <div class="footer-tagline">Tomorrow's technology, protecting today</div>
+  <div class="footer-divider"></div>
+  <div class="footer-copy">Iron Man &copy; Marvel Comics. Fan tribute site. All rights belong to their respective owners.</div>
+</footer>
+
+
+<div id="cursor-glow"></div>
+<div id="cursor-ring"></div>
+
+<!-- BOOT SEQUENCE -->
+<div id="boot-seq">
+  <div class="boot-ring"></div>
+  <div class="boot-text" id="boot-msg">Initializing JARVIS...</div>
+  <div class="boot-progress-wrap"><div class="boot-progress-fill" id="boot-bar"></div></div>
+</div>
+
+<script>
+// ── BOOT SEQUENCE ──────────────────────────────────────────────────────────
+(function() {
+  const msgs = ['Initializing JARVIS...', 'Loading arc reactor...', 'Calibrating repulsors...', 'Suit systems online.', 'Welcome, Mr. Stark.'];
+  let i = 0;
+  const bootMsg = document.getElementById('boot-msg');
+  const bootBar = document.getElementById('boot-bar');
+  const bootSeq = document.getElementById('boot-seq');
+  let pct = 0;
+  const iv = setInterval(() => {
+    pct += 5;
+    bootBar.style.width = pct + '%';
+    if (pct % 20 === 0 && i < msgs.length) { bootMsg.textContent = msgs[i++]; }
+    if (pct >= 100) {
+      clearInterval(iv);
+      setTimeout(() => { bootSeq.classList.add('done'); setTimeout(() => bootSeq.remove(), 900); }, 400);
+    }
+  }, 50);
+})();
+
+// ── CUSTOM CURSOR ──────────────────────────────────────────────────────────
+const glow = document.getElementById('cursor-glow');
+const ring = document.getElementById('cursor-ring');
+let mx=0, my=0, rx=0, ry=0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+(function animCursor() {
+  rx += (mx - rx) * 0.15; ry += (my - ry) * 0.15;
+  glow.style.left = mx + 'px'; glow.style.top = my + 'px';
+  ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+  requestAnimationFrame(animCursor);
+})();
+document.addEventListener('mousedown', () => { glow.style.width='28px'; glow.style.height='28px'; glow.style.boxShadow='0 0 20px 8px rgba(255,215,0,0.6)'; });
+document.addEventListener('mouseup', () => { glow.style.width='18px'; glow.style.height='18px'; glow.style.boxShadow='0 0 12px 4px rgba(255,215,0,0.4)'; });
+
+// ── ARC REACTOR PARTICLES ─────────────────────────────────────────────────
+const pc = document.getElementById('particle-canvas');
+const hero = document.getElementById('hero');
+function resizePC() { pc.width = hero.offsetWidth; pc.height = hero.offsetHeight; }
+resizePC();
+window.addEventListener('resize', resizePC);
+const pctx = pc.getContext('2d');
+let particles = [];
+// Arc reactor is approximately at 65% x, 68% y of hero
+function getReactorPos() {
+  return { x: pc.width * 0.65, y: pc.height * 0.68 };
+}
+function spawnParticle() {
+  const {x, y} = getReactorPos();
+  const angle = Math.random() * Math.PI * 2;
+  const speed = 0.5 + Math.random() * 2;
+  particles.push({
+    x, y,
+    vx: Math.cos(angle) * speed,
+    vy: Math.sin(angle) * speed - 1.5,
+    life: 1,
+    decay: 0.012 + Math.random() * 0.018,
+    r: 1 + Math.random() * 2.5,
+    color: Math.random() < 0.6 ? '#FFD700' : Math.random() < 0.5 ? '#fff' : '#D4AF37'
+  });
+}
+function animParticles() {
+  pctx.clearRect(0, 0, pc.width, pc.height);
+  if (Math.random() < 0.6) spawnParticle();
+  particles = particles.filter(p => p.life > 0.01);
+  particles.forEach(p => {
+    p.x += p.vx; p.y += p.vy;
+    p.vx *= 0.97; p.vy *= 0.97;
+    p.life -= p.decay;
+    pctx.save();
+    pctx.globalAlpha = Math.max(0, p.life);
+    pctx.shadowColor = p.color;
+    pctx.shadowBlur = 6;
+    pctx.fillStyle = p.color;
+    pctx.beginPath();
+    pctx.arc(p.x, p.y, Math.max(0, p.r * p.life), 0, Math.PI * 2);
+    pctx.fill();
+    pctx.restore();
+  });
+  requestAnimationFrame(animParticles);
+}
+animParticles();
+
+// ── PARALLAX ──────────────────────────────────────────────────────────────
+const parallaxEls = document.querySelectorAll('.hero-img-frame, .hero-slash, .hero-text');
+window.addEventListener('scroll', () => {
+  const sy = window.scrollY;
+  parallaxEls.forEach((el, i) => {
+    const speeds = [0.18, 0.08, 0.12];
+    el.style.transform = `translateY(${sy * speeds[i % speeds.length]}px)`;
+  });
+});
+
+// ── PAGE FLIP OBSERVER ────────────────────────────────────────────────────
+const flipObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('flipped'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.flip-section').forEach(el => flipObs.observe(el));
+
+// ── REVEAL OBSERVER ───────────────────────────────────────────────────────
+const revObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal, .quote-bubble').forEach(el => revObs.observe(el));
+
+// ── HUD DATA CYCLING ─────────────────────────────────────────────────────
+const d1 = document.querySelector('.hud-data.d1');
+const d2 = document.querySelector('.hud-data.d2');
+const d3 = document.querySelector('.hud-data.d3');
+const d4 = document.querySelector('.hud-data.d4');
+const d1vals = ['ARC REACTOR: 100%','ARC REACTOR: 98%','ARC REACTOR: 100%'];
+const d2vals = ['ALT: 4,200 FT','ALT: 4,287 FT','ALT: 4,312 FT','ALT: 4,200 FT'];
+const d3vals = ['THREAT LEVEL: HIGH','THREAT LEVEL: EXTREME','THREAT LEVEL: HIGH'];
+const d4vals = ['JARVIS v3.1 — ONLINE','SCANNING...','JARVIS v3.1 — ONLINE'];
+let di=0;
+setInterval(() => {
+  di++;
+  if(d1) d1.textContent = d1vals[di % d1vals.length];
+  if(d2) d2.textContent = d2vals[di % d2vals.length];
+  if(d3) d3.textContent = d3vals[di % d3vals.length];
+  if(d4) d4.textContent = d4vals[di % d4vals.length];
+}, 2200);
+
+// ── TIMELINE DRAG SCROLL ─────────────────────────────────────────────────
+const tlWrap = document.getElementById('tl-wrap');
+if (tlWrap) {
+  let isDown=false, startX, scrollLeft;
+  tlWrap.addEventListener('mousedown', e => { isDown=true; startX=e.pageX-tlWrap.offsetLeft; scrollLeft=tlWrap.scrollLeft; });
+  tlWrap.addEventListener('mouseleave', () => isDown=false);
+  tlWrap.addEventListener('mouseup', () => isDown=false);
+  tlWrap.addEventListener('mousemove', e => { if(!isDown)return; e.preventDefault(); const x=e.pageX-tlWrap.offsetLeft; tlWrap.scrollLeft=scrollLeft-(x-startX)*1.2; });
+}
+</script>
+
+<script>
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.1 });
+reveals.forEach(el => obs.observe(el));
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// ════════════════════════════════════════════
+// ARC REACTOR ANIMATION
+// ════════════════════════════════════════════
+(function() {
+  const rings = document.querySelectorAll('.arc-ring');
+  const pulse = document.querySelector('.arc-pulse');
+  const segs = document.getElementById('arc-segments');
+  let t = 0;
+  function animArc() {
+    t += 0.025;
+    rings.forEach((r, i) => {
+      r.style.opacity = 0.15 + Math.sin(t + i * 0.8) * 0.12;
+      r.setAttribute('r', (160 - i*15) + Math.sin(t*0.7 + i) * 3);
+    });
+    if(pulse) {
+      pulse.style.opacity = 0.3 + Math.sin(t * 2) * 0.25;
+      const pr = 26 + Math.sin(t*2) * 8;
+      pulse.setAttribute('r', pr);
+    }
+    if(segs) segs.style.opacity = 0.5 + Math.sin(t * 1.5) * 0.25;
+
+    // Update stats
+    const pct = document.getElementById('arc-pct');
+    const gj = document.getElementById('arc-gj');
+    const temp = document.getElementById('arc-temp');
+    if(pct) pct.textContent = (98 + Math.sin(t) * 2).toFixed(1) + '%';
+    if(gj) gj.textContent = (3.0 + Math.sin(t * 0.7) * 0.15).toFixed(2) + ' GJ';
+    if(temp) temp.textContent = (2941 + Math.round(Math.sin(t * 0.5) * 30)).toLocaleString() + '°';
+
+    requestAnimationFrame(animArc);
+  }
+  animArc();
+})();
+
+// ════════════════════════════════════════════
+// REPULSOR SFX (Web Audio API)
+// ════════════════════════════════════════════
+let audioCtx = null;
+function getAudioCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+function fireRepulsor() {
+  const ctx = getAudioCtx();
+  const osc1 = ctx.createOscillator();
+  const osc2 = ctx.createOscillator();
+  const gain = ctx.createGain();
+  const dist = ctx.createWaveShaper();
+  const curve = new Float32Array(256);
+  for(let i=0;i<256;i++) { const x=i*2/256-1; curve[i]=x*3/(1+2*Math.abs(x)); }
+  dist.curve = curve;
+  osc1.type = 'sawtooth'; osc1.frequency.setValueAtTime(400, ctx.currentTime);
+  osc1.frequency.exponentialRampToValueAtTime(60, ctx.currentTime + 0.3);
+  osc2.type = 'square'; osc2.frequency.setValueAtTime(200, ctx.currentTime);
+  osc2.frequency.exponentialRampToValueAtTime(30, ctx.currentTime + 0.25);
+  gain.gain.setValueAtTime(0.18, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+  osc1.connect(dist); osc2.connect(dist);
+  dist.connect(gain); gain.connect(ctx.destination);
+  osc1.start(); osc2.start();
+  osc1.stop(ctx.currentTime + 0.35);
+  osc2.stop(ctx.currentTime + 0.35);
+}
+document.addEventListener('click', e => {
+  if(!e.target.closest('button') && !e.target.closest('a') && !e.target.closest('#easter-egg') && !e.target.closest('#crack-overlay')) {
+    fireRepulsor();
+  }
+});
+
+// ════════════════════════════════════════════
+// ARC REACTOR HUM
+// ════════════════════════════════════════════
+let humOsc=null, humGain=null, humOn=false;
+function toggleHum() {
+  const btn = document.getElementById('hum-btn');
+  if(!humOn) {
+    const ctx = getAudioCtx();
+    humOsc = ctx.createOscillator();
+    const humOsc2 = ctx.createOscillator();
+    humGain = ctx.createGain();
+    const humFilter = ctx.createBiquadFilter();
+    humFilter.type = 'lowpass'; humFilter.frequency.value = 200;
+    humOsc.type = 'sine'; humOsc.frequency.value = 60;
+    humOsc2.type = 'sine'; humOsc2.frequency.value = 120;
+    humGain.gain.value = 0.04;
+    humOsc.connect(humFilter); humOsc2.connect(humFilter);
+    humFilter.connect(humGain); humGain.connect(ctx.destination);
+    humOsc.start(); humOsc2.start();
+    humOn = true; btn.textContent = 'Hum: ON'; btn.classList.add('on');
+  } else {
+    if(humOsc) { humOsc.stop(); humOsc=null; }
+    if(humGain) humGain.disconnect();
+    humOn=false; btn.textContent='Hum: OFF'; btn.classList.remove('on');
+  }
+}
+
+// ════════════════════════════════════════════
+// JARVIS WEB SPEECH
+// ════════════════════════════════════════════
+const jarvisLines = [
+  "All systems nominal, Mr. Stark. Arc reactor output at one hundred percent.",
+  "I've run a check on your suit integrity. Everything looks good.",
+  "Threat assessment complete. Seven hostiles detected in sector seven gamma.",
+  "Sir, I've detected an anomaly in your repulsor calibration. Shall I adjust?",
+  "Welcome back, Mr. Stark. I've taken the liberty of ordering your usual.",
+  "The suit is ready. Power levels optimal. Shall I initiate flight protocol?",
+  "I've analysed their attack strategy. I suggest a preemptive repulsor strike.",
+  "Mr. Stark, Miss Potts is calling. Again.",
+  "Engaging evasive maneuvers. Try to keep up.",
+  "Long range sensors indicate incoming projectiles. Countermeasures activated.",
+];
+let jarvisIdx = 0;
+function jarvisSpeak() {
+  if(!window.speechSynthesis) return;
+  const utter = new SpeechSynthesisUtterance(jarvisLines[jarvisIdx % jarvisLines.length]);
+  jarvisIdx++;
+  utter.rate = 0.9; utter.pitch = 0.85; utter.volume = 0.9;
+  const voices = window.speechSynthesis.getVoices();
+  const best = voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('male'))
+             || voices.find(v => v.lang.startsWith('en'))
+             || voices[0];
+  if(best) utter.voice = best;
+  window.speechSynthesis.speak(utter);
+}
+window.speechSynthesis && window.speechSynthesis.getVoices();
+
+// ════════════════════════════════════════════
+// THREE.JS IRON MAN ARMOR
+// ════════════════════════════════════════════
+(function() {
+  const wrap = document.getElementById('three-canvas-wrap');
+  const canvas = document.getElementById('three-canvas');
+  if(!wrap || !canvas || !window.THREE) return;
+
+  const W = wrap.clientWidth || 500;
+  const H = wrap.clientHeight || 500;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setSize(W, H);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, W/H, 0.1, 100);
+  camera.position.set(0, 0, 5);
+
+  // Lighting
+  const ambLight = new THREE.AmbientLight(0x330000, 0.8);
+  scene.add(ambLight);
+  const goldLight = new THREE.PointLight(0xFFD700, 2, 20);
+  goldLight.position.set(3, 3, 3);
+  scene.add(goldLight);
+  const redLight = new THREE.PointLight(0xFF2200, 1.5, 20);
+  redLight.position.set(-3, -2, 2);
+  scene.add(redLight);
+  const fillLight = new THREE.PointLight(0x4488ff, 1, 15);
+  fillLight.position.set(0, 0, 5);
+  scene.add(fillLight);
+
+  // Build Iron Man armor as geometric shapes
+  const ironManGroup = new THREE.Group();
+
+  const redMat = new THREE.MeshStandardMaterial({ color: 0x8B1A1A, roughness: 0.25, metalness: 0.85 });
+  const goldMat = new THREE.MeshStandardMaterial({ color: 0xFFD700, roughness: 0.15, metalness: 0.95 });
+  const blueMat = new THREE.MeshStandardMaterial({ color: 0x00aaff, roughness: 0.1, metalness: 0.5, emissive: 0x003366, emissiveIntensity: 0.5 });
+  const wireMat = new THREE.MeshBasicMaterial({ color: 0xFFD700, wireframe: true });
+
+  // Helmet
+  const helmet = new THREE.Mesh(new THREE.SphereGeometry(0.62, 16, 12), redMat);
+  helmet.position.set(0, 1.55, 0);
+  helmet.scale.set(1, 1.15, 0.95);
+  ironManGroup.add(helmet);
+
+  // Faceplate
+  const face = new THREE.Mesh(new THREE.SphereGeometry(0.55, 12, 10, 0, Math.PI*2, 0, Math.PI*0.55), goldMat);
+  face.position.set(0, 1.42, 0.22);
+  face.rotation.x = -0.2;
+  ironManGroup.add(face);
+
+  // Eyes
+  [-0.18, 0.18].forEach(x => {
+    const eye = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.06, 0.05), new THREE.MeshStandardMaterial({color:0xffffff, emissive:0xaaddff, emissiveIntensity:2, roughness:0.1}));
+    eye.position.set(x, 1.58, 0.55);
+    ironManGroup.add(eye);
+  });
+
+  // Torso
+  const torso = new THREE.Mesh(new THREE.CylinderGeometry(0.52, 0.45, 1.1, 12), redMat);
+  torso.position.set(0, 0.55, 0);
+  ironManGroup.add(torso);
+
+  // Chest gold panel
+  const chest = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.35, 0.15), goldMat);
+  chest.position.set(0, 0.75, 0.42);
+  ironManGroup.add(chest);
+
+  // Arc reactor
+  const reactor = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.13, 0.08, 16), blueMat);
+  reactor.rotation.x = Math.PI/2;
+  reactor.position.set(0, 0.62, 0.52);
+  ironManGroup.add(reactor);
+
+  // Shoulder pads
+  [-0.78, 0.78].forEach(x => {
+    const sh = new THREE.Mesh(new THREE.SphereGeometry(0.28, 10, 8), goldMat);
+    sh.position.set(x, 0.9, 0);
+    sh.scale.set(1, 0.7, 0.85);
+    ironManGroup.add(sh);
+  });
+
+  // Arms
+  [-0.72, 0.72].forEach(x => {
+    const arm = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.14, 0.75, 8), redMat);
+    arm.position.set(x * 1.02, 0.38, 0);
+    ironManGroup.add(arm);
+    const forearm = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.15, 0.65, 8), goldMat);
+    forearm.position.set(x * 1.06, -0.2, 0);
+    ironManGroup.add(forearm);
+    const hand = new THREE.Mesh(new THREE.SphereGeometry(0.14, 8, 6), redMat);
+    hand.position.set(x * 1.08, -0.58, 0);
+    ironManGroup.add(hand);
+  });
+
+  // Hip belt
+  const hip = new THREE.Mesh(new THREE.CylinderGeometry(0.48, 0.42, 0.22, 12), goldMat);
+  hip.position.set(0, 0.02, 0);
+  ironManGroup.add(hip);
+
+  // Legs
+  [-0.24, 0.24].forEach(x => {
+    const thigh = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.17, 0.8, 8), redMat);
+    thigh.position.set(x, -0.52, 0);
+    ironManGroup.add(thigh);
+    const shin = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.18, 0.75, 8), goldMat);
+    shin.position.set(x, -1.22, 0);
+    ironManGroup.add(shin);
+    const boot = new THREE.Mesh(new THREE.BoxGeometry(0.26, 0.22, 0.38), redMat);
+    boot.position.set(x, -1.65, 0.06);
+    ironManGroup.add(boot);
+  });
+
+  scene.add(ironManGroup);
+
+  // Materials storage
+  const allMeshes = [];
+  ironManGroup.traverse(obj => { if(obj.isMesh) allMeshes.push({mesh:obj, origMat:obj.material}); });
+
+  // Mouse drag
+  let isDragging=false, prevX=0, prevY=0, rotX=0, rotY=0, autoRot=false;
+  canvas.addEventListener('mousedown', e => { isDragging=true; prevX=e.clientX; prevY=e.clientY; });
+  window.addEventListener('mousemove', e => {
+    if(!isDragging) return;
+    rotY += (e.clientX - prevX) * 0.008;
+    rotX += (e.clientY - prevY) * 0.005;
+    prevX=e.clientX; prevY=e.clientY;
+    rotX = Math.max(-0.8, Math.min(0.8, rotX));
+  });
+  window.addEventListener('mouseup', () => isDragging=false);
+  canvas.addEventListener('wheel', e => { camera.position.z = Math.max(2, Math.min(9, camera.position.z + e.deltaY * 0.01)); });
+
+  window.setArmorMode = function(mode) {
+    document.querySelectorAll('.armor-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('btn-'+mode)?.classList.add('active');
+    allMeshes.forEach(({mesh, origMat}) => {
+      if(mode === 'wire') { mesh.material = wireMat; }
+      else { mesh.material = origMat; }
+    });
+    autoRot = (mode === 'auto');
+  };
+
+  // Render loop
+  function animArmor() {
+    requestAnimationFrame(animArmor);
+    if(autoRot) rotY += 0.008;
+    ironManGroup.rotation.y = rotY;
+    ironManGroup.rotation.x = rotX;
+    goldLight.position.x = Math.sin(Date.now()*0.001) * 4;
+    goldLight.intensity = 1.8 + Math.sin(Date.now()*0.002) * 0.5;
+    renderer.render(scene, camera);
+  }
+  animArmor();
+
+  window.addEventListener('resize', () => {
+    const nw = wrap.clientWidth; const nh = wrap.clientHeight;
+    camera.aspect = nw/nh; camera.updateProjectionMatrix();
+    renderer.setSize(nw, nh);
+  });
+})();
+
+// ════════════════════════════════════════════
+// HOLOGRAPHIC PANELS — TILT/MOUSE
+// ════════════════════════════════════════════
+(function() {
+  const grid = document.getElementById('holo-grid');
+  if(!grid) return;
+  const cards = grid.querySelectorAll('.holo-card');
+
+  function applyTilt(x, y) {
+    const rect = grid.getBoundingClientRect();
+    const cx = rect.left + rect.width/2;
+    const cy = rect.top + rect.height/2;
+    const dx = (x - cx) / (rect.width/2);
+    const dy = (y - cy) / (rect.height/2);
+    cards.forEach(card => {
+      const depth = parseFloat(card.dataset.depth) || 8;
+      const rx = -dy * depth;
+      const ry = dx * depth;
+      card.style.transform = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) scale(1.02)`;
+      const shine = card.querySelector('.holo-shine');
+      if(shine) {
+        shine.style.background = `linear-gradient(${135+ry*3}deg, rgba(255,215,0,0) 30%, rgba(255,215,0,${0.1+Math.abs(dx)*0.15}) 50%, rgba(255,215,0,0) 70%)`;
+        shine.style.opacity = 0.5 + Math.abs(dx) * 0.5;
+      }
+    });
+  }
+
+  document.addEventListener('mousemove', e => applyTilt(e.clientX, e.clientY));
+
+  if(window.DeviceOrientationEvent) {
+    window.addEventListener('deviceorientation', e => {
+      if(e.gamma == null) return;
+      const fakeX = window.innerWidth/2 + e.gamma * 10;
+      const fakeY = window.innerHeight/2 + (e.beta - 45) * 8;
+      applyTilt(fakeX, fakeY);
+    });
+  }
+})();
+
+// ════════════════════════════════════════════
+// TELEMETRY CHARTS
+// ════════════════════════════════════════════
+(function() {
+  function makeChart(canvasId, color) {
+    const c = document.getElementById(canvasId);
+    if(!c) return null;
+    const ctx = c.getContext('2d');
+    const w = c.parentElement.clientWidth - 40;
+    c.width = w; c.height = 80;
+    const pts = Array.from({length:40}, () => 40 + Math.random()*35);
+    return {ctx, c, pts, color, w};
+  }
+  function drawChart(chart) {
+    if(!chart) return;
+    const {ctx, c, pts, color} = chart;
+    ctx.clearRect(0,0,c.width,c.height);
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    pts.forEach((v,i) => {
+      const x = (i/(pts.length-1))*c.width;
+      const y = c.height - (v/100)*c.height;
+      i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+    });
+    ctx.stroke();
+    // Fill
+    ctx.lineTo(c.width, c.height); ctx.lineTo(0,c.height); ctx.closePath();
+    ctx.fillStyle = color.replace(')',',0.1)').replace('rgb','rgba');
+    ctx.fill();
+    // Grid lines
+    ctx.strokeStyle = 'rgba(255,215,0,0.06)'; ctx.lineWidth = 1;
+    [25,50,75].forEach(y => {
+      ctx.beginPath(); ctx.moveTo(0, (y/100)*c.height); ctx.lineTo(c.width,(y/100)*c.height); ctx.stroke();
+    });
+  }
+
+  const altChart = makeChart('chart-alt', 'rgb(255,215,0)');
+  const spdChart = makeChart('chart-spd', 'rgb(192,57,43)');
+  const thrChart = makeChart('chart-thr', 'rgb(0,150,255)');
+
+  const threats = ['NOMINAL','ELEVATED','HIGH','CRITICAL'];
+  const threatColors = ['#27ae60','#f39c12','#e53935','#8B1A1A'];
+  let tIdx = 0;
+
+  function updateTelemetry() {
+    // Altitude
+    if(altChart) {
+      altChart.pts.push(40 + Math.random()*45); altChart.pts.shift();
+      drawChart(altChart);
+      const alt = Math.round(4100 + altChart.pts[altChart.pts.length-1]*5);
+      const el = document.getElementById('tel-alt');
+      if(el) el.textContent = alt.toLocaleString();
+    }
+    // Speed
+    if(spdChart) {
+      spdChart.pts.push(50 + Math.random()*40); spdChart.pts.shift();
+      drawChart(spdChart);
+      const spd = Math.round(700 + spdChart.pts[spdChart.pts.length-1]*3);
+      const el = document.getElementById('tel-spd');
+      if(el) el.textContent = spd.toLocaleString();
+    }
+    // Threat
+    if(thrChart) {
+      thrChart.pts.push(30 + Math.random()*60); thrChart.pts.shift();
+      drawChart(thrChart);
+    }
+    // Threat text
+    tIdx++;
+    if(tIdx % 15 === 0) {
+      const ti = Math.floor(Math.random()*threats.length);
+      const el = document.getElementById('tel-threat');
+      const sub = document.getElementById('tel-threat-sub');
+      if(el) { el.textContent = threats[ti]; el.style.color = threatColors[ti]; }
+      if(sub) sub.textContent = ['Sector 7G clear','Multiple hostiles detected','Incoming projectiles','Critical threat engaged'][ti];
+      const targ = document.getElementById('tel-targets');
+      const host = document.getElementById('tel-hostile');
+      if(targ) targ.textContent = Math.floor(Math.random()*12)+1;
+      if(host) host.textContent = Math.floor(Math.random()*6);
+    }
+    // Bars
+    const bars = [
+      {id:'bar-arc', vid:'bv-arc', min:88, max:100},
+      {id:'bar-arm', vid:'bv-arm', min:70, max:95},
+      {id:'bar-rep', vid:'bv-rep', min:80, max:100},
+      {id:'bar-shd', vid:'bv-shd', min:60, max:90},
+      {id:'bar-jar', vid:'bv-jar', min:98, max:100},
+      {id:'bar-nan', vid:'bv-nan', min:78, max:96},
+    ];
+    bars.forEach(b => {
+      const v = Math.round(b.min + Math.random()*(b.max-b.min));
+      const bar = document.getElementById(b.id);
+      const val = document.getElementById(b.vid);
+      if(bar) bar.style.width = v+'%';
+      if(val) val.textContent = v+'%';
+    });
+  }
+  setInterval(updateTelemetry, 1200);
+  setTimeout(updateTelemetry, 800);
+})();
+
+// ════════════════════════════════════════════
+// DESTRUCTION MODE
+// ════════════════════════════════════════════
+function triggerDestruction() {
+  const overlay = document.getElementById('crack-overlay');
+  const lines = document.getElementById('crack-lines');
+  const flash = document.getElementById('crack-flash');
+  const reboot = document.getElementById('reboot-screen');
+  if(!overlay) return;
+
+  // Sound
+  const ctx = getAudioCtx();
+  const osc = ctx.createOscillator();
+  const g = ctx.createGain();
+  osc.type='sawtooth'; osc.frequency.setValueAtTime(80,ctx.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(20,ctx.currentTime+0.8);
+  g.gain.setValueAtTime(0.3,ctx.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.8);
+  osc.connect(g); g.connect(ctx.destination);
+  osc.start(); osc.stop(ctx.currentTime+0.8);
+
+  overlay.classList.add('active');
+  if(lines) {
+    lines.style.opacity = '0';
+    setTimeout(()=>{ lines.style.transition='opacity 0.1s'; lines.style.opacity='1'; }, 50);
+  }
+  if(flash) {
+    setTimeout(()=>{
+      flash.style.transition='opacity 0.05s'; flash.style.opacity='0.7';
+      setTimeout(()=>{ flash.style.opacity='0'; }, 80);
+    }, 100);
+  }
+
+  // Screen shake
+  document.body.style.transition = 'transform 0.05s';
+  let shakes = 0;
+  const shakeIv = setInterval(()=>{
+    const dx = (Math.random()-0.5)*12; const dy = (Math.random()-0.5)*8;
+    document.body.style.transform = `translate(${dx}px,${dy}px)`;
+    if(++shakes > 12) { clearInterval(shakeIv); document.body.style.transform=''; }
+  }, 50);
+
+  // After cracks, show reboot
+  setTimeout(() => {
+    overlay.classList.remove('active');
+    reboot.classList.add('active');
+    // Voice
+    if(window.speechSynthesis) {
+      const u = new SpeechSynthesisUtterance('Suit critical damage detected. Initiating emergency reboot.');
+      u.rate=0.85; u.pitch=0.75; window.speechSynthesis.speak(u);
+    }
+    setTimeout(()=>{
+      reboot.classList.remove('active');
+      if(window.speechSynthesis) {
+        const u2 = new SpeechSynthesisUtterance('Systems restored. Welcome back, Mr. Stark.');
+        u2.rate=0.9; u2.pitch=0.85; window.speechSynthesis.speak(u2);
+      }
+    }, 2800);
+  }, 1400);
+}
+
+// ════════════════════════════════════════════
+// EASTER EGG — KONAMI CODE
+// ════════════════════════════════════════════
+const KONAMI = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+let konamiIdx = 0;
+document.addEventListener('keydown', e => {
+  if(e.key === KONAMI[konamiIdx]) {
+    konamiIdx++;
+    if(konamiIdx === KONAMI.length) { triggerEasterEgg(); konamiIdx=0; }
+  } else { konamiIdx = 0; }
+});
+
+function triggerEasterEgg() {
+  const ee = document.getElementById('easter-egg');
+  const eeCanvas = document.getElementById('ee-canvas');
+  if(!ee || !eeCanvas) return;
+  ee.classList.add('active');
+  eeCanvas.width = window.innerWidth;
+  eeCanvas.height = window.innerHeight;
+  const ctx = eeCanvas.getContext('2d');
+
+  // Particle explosion
+  const particles = [];
+  const colors = ['#FFD700','#FFF','#C0392B','#FFD700','#ff8800','#fff9cc'];
+  for(let i=0;i<200;i++) {
+    const angle = Math.random()*Math.PI*2;
+    const speed = 2 + Math.random()*8;
+    particles.push({
+      x: window.innerWidth/2, y: window.innerHeight/2,
+      vx: Math.cos(angle)*speed, vy: Math.sin(angle)*speed,
+      life:1, decay: 0.008+Math.random()*0.012,
+      r: 2+Math.random()*5, color: colors[Math.floor(Math.random()*colors.length)]
+    });
+  }
+
+  // JARVIS announces
+  if(window.speechSynthesis) {
+    const u = new SpeechSynthesisUtterance('And I... am... Iron Man.');
+    u.rate=0.75; u.pitch=0.7; u.volume=1; window.speechSynthesis.speak(u);
+  }
+  // Repulsor charge-up sound
+  const actx = getAudioCtx();
+  const osc = actx.createOscillator();
+  const g = actx.createGain();
+  osc.type='sine'; osc.frequency.setValueAtTime(100,actx.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(800,actx.currentTime+1.5);
+  g.gain.setValueAtTime(0.2,actx.currentTime); g.gain.setValueAtTime(0.4,actx.currentTime+1.3);
+  g.gain.exponentialRampToValueAtTime(0.001,actx.currentTime+1.8);
+  osc.connect(g); g.connect(actx.destination);
+  osc.start(); osc.stop(actx.currentTime+1.8);
+
+  function animEE() {
+    ctx.clearRect(0,0,eeCanvas.width,eeCanvas.height);
+    particles.forEach(p => {
+      p.x+=p.vx; p.y+=p.vy; p.vy+=0.05;
+      p.vx*=0.98; p.vy*=0.98;
+      p.life-=p.decay;
+      if(p.life<=0) return;
+      ctx.save();
+      ctx.globalAlpha = Math.max(0,p.life);
+      ctx.shadowColor=p.color; ctx.shadowBlur=8;
+      ctx.fillStyle=p.color;
+      ctx.beginPath(); ctx.arc(p.x,p.y,Math.max(0,p.r*p.life),0,Math.PI*2); ctx.fill();
+      ctx.restore();
+    });
+    if(particles.some(p=>p.life>0)) requestAnimationFrame(animEE);
+    else ctx.clearRect(0,0,eeCanvas.width,eeCanvas.height);
+  }
+  animEE();
+}
+function closeEasterEgg() {
+  document.getElementById('easter-egg')?.classList.remove('active');
+}
+</script>
+
+
+<!-- CORNER VIDEO PLAYER -->
+<div id="corner-video-wrap">
+  <div id="video-topbar">
+    <div style="display:flex;align-items:center;">
+      <span class="video-live-dot"></span>
+      <span class="video-title">Stark Feed</span>
+    </div>
+    <div class="video-topbar-btns">
+      <button class="video-topbar-btn" onclick="toggleMinimize()" id="min-btn">—</button>
+      <button class="video-topbar-btn" onclick="closeVideo()">✕</button>
+    </div>
+  </div>
+  <video id="corner-video" src="assets/video.mp4" playsinline preload="metadata"
+    onclick="togglePlay()"></video>
+  <div id="video-controls">
+    <button class="vc-btn" id="play-btn" onclick="togglePlay()">▶</button>
+    <div id="vc-progress-wrap" onclick="seekVideo(event)">
+      <div id="vc-progress-fill"></div>
+    </div>
+    <span id="vc-time">0:00</span>
+    <button id="vc-vol" onclick="toggleMute()">🔊</button>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════
+// CORNER VIDEO PLAYER
+// ════════════════════════════════════════
+(function() {
+  const vid = document.getElementById('corner-video');
+  const playBtn = document.getElementById('play-btn');
+  const progress = document.getElementById('vc-progress-fill');
+  const timeEl = document.getElementById('vc-time');
+  const wrap = document.getElementById('corner-video-wrap');
+  let minimized = false;
+
+  // Auto-play muted on load
+  vid.muted = false;
+  vid.volume = 0.7;
+
+  window.togglePlay = function() {
+    if(vid.paused) { vid.play(); playBtn.textContent = '⏸'; }
+    else { vid.pause(); playBtn.textContent = '▶'; }
+  };
+
+  window.toggleMute = function() {
+    vid.muted = !vid.muted;
+    document.getElementById('vc-vol').textContent = vid.muted ? '🔇' : '🔊';
+  };
+
+  window.toggleMinimize = function() {
+    minimized = !minimized;
+    wrap.classList.toggle('minimized', minimized);
+    document.getElementById('min-btn').textContent = minimized ? '□' : '—';
+  };
+
+  window.closeVideo = function() {
+    wrap.style.display = 'none';
+    vid.pause();
+  };
+
+  window.seekVideo = function(e) {
+    const rect = document.getElementById('vc-progress-wrap').getBoundingClientRect();
+    const pct = (e.clientX - rect.left) / rect.width;
+    vid.currentTime = pct * vid.duration;
+  };
+
+  function fmtTime(s) {
+    const m = Math.floor(s/60);
+    const sec = Math.floor(s%60).toString().padStart(2,'0');
+    return m+':'+sec;
+  }
+
+  vid.addEventListener('timeupdate', () => {
+    if(!vid.duration) return;
+    const pct = (vid.currentTime / vid.duration) * 100;
+    progress.style.width = pct + '%';
+    timeEl.textContent = fmtTime(vid.currentTime) + ' / ' + fmtTime(vid.duration);
+  });
+
+  vid.addEventListener('ended', () => { playBtn.textContent = '▶'; });
+  vid.addEventListener('play', () => { playBtn.textContent = '⏸'; });
+  vid.addEventListener('pause', () => { playBtn.textContent = '▶'; });
+
+  // Draggable
+  let dragging=false, ox=0, oy=0, wx=0, wy=0;
+  const topbar = document.getElementById('video-topbar');
+  topbar.addEventListener('mousedown', e => {
+    dragging=true;
+    const r=wrap.getBoundingClientRect();
+    ox=e.clientX-r.left; oy=e.clientY-r.top;
+    wrap.style.bottom='auto'; wrap.style.left='auto';
+    wrap.style.right='auto'; wrap.style.top='auto';
+    wx=r.left; wy=r.top;
+    wrap.style.left=wx+'px'; wrap.style.top=wy+'px';
+  });
+  window.addEventListener('mousemove', e => {
+    if(!dragging) return;
+    wrap.style.left=(e.clientX-ox)+'px';
+    wrap.style.top=(e.clientY-oy)+'px';
+  });
+  window.addEventListener('mouseup', () => dragging=false);
+})();
+</script>
+
+</body>
+</html>
