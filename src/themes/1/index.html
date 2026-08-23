@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<link rel="icon" type="image/png" href="icon.png">
+<link rel="icon" type="image/png" href="../../../assets/icon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Anshu's Lofi Den</title>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Nunito:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -1989,18 +1989,18 @@ window.addEventListener('scroll', ()=>{
    TRACKS & PLAYER
 ═══════════════════════════════════════ */
 const tracks = [
-  {name:'Rainy Window Study',    artist:"Anshu's Mix · Mellow",   dur:222, src:'rainy-window-study.mp3'},
-  {name:'Golden Hour Notebook',  artist:'Warm Afternoon Vibes',    dur:238, src:'golden-hour-notebook.mp3'},
-  {name:'Cityscape Daydream',    artist:'Jazz-Hop · Smooth',       dur:302, src:'cityscape-daydream.mp3'},
-  {name:'Ivory Keys at 2am',     artist:'Piano Lofi · Deep Focus', dur:269, src:'ivory-keys-at-2am.mp3'},
-  {name:'Monsoon Study Session', artist:'Rain + Beats · Cozy',     dur:373, src:'moonsoon-study-session.mp3'},
-  {name:'Birds & Morning',       artist:'Ambient · Dawn',          dur:240, src:'birds-chirpping.mp3'},
+  {name:'Rainy Window Study',    artist:"Anshu's Mix · Mellow",   dur:222, src:'../../../assets/rainy-window-study.mp3'},
+  {name:'Golden Hour Notebook',  artist:'Warm Afternoon Vibes',    dur:238, src:'../../../assets/golden-hour-notebook.mp3'},
+  {name:'Cityscape Daydream',    artist:'Jazz-Hop · Smooth',       dur:302, src:'../../../assets/cityscape-daydream.mp3'},
+  {name:'Ivory Keys at 2am',     artist:'Piano Lofi · Deep Focus', dur:269, src:'../../../assets/ivory-keys-at-2am.mp3'},
+  {name:'Monsoon Study Session', artist:'Rain + Beats · Cozy',     dur:373, src:'../../../assets/moonsoon-study-session.mp3'},
+  {name:'Birds & Morning',       artist:'Ambient · Dawn',          dur:240, src:'../../../assets/birds-chirpping.mp3'},
 ];
 const audioEl = new Audio();
 audioEl.volume = 0.75;
 
 /* ── BACKGROUND AMBIENT LOOP: song1 → song2 → song1 → ... ── */
-const bgTracks = ['song1.mp3', 'song2.mp3'];
+const bgTracks = ['../../../assets/song1.mp3', '../../../assets/song2.mp3'];
 let bgIdx = 0;
 let bgStarted = false;
 const bgAudio = new Audio();
@@ -2255,12 +2255,12 @@ pomoRender();
    AMBIENT MIXER — real MP3 files
 ═══════════════════════════════════════ */
 const ambientSrcs = {
-  rain:    'rain.mp3',
-  vinyl:   'vinyl-crackle.mp3',
-  cafe:    'cafe-murmur.mp3',
-  thunder: 'distant-thunder.mp3',
-  fan:     'ceiling-fan.mp3',
-  city:    'city-at-night.mp3',
+  rain:    '../../../assets/rain.mp3',
+  vinyl:   '../../../assets/vinyl-crackle.mp3',
+  cafe:    '../../../assets/cafe-murmur.mp3',
+  thunder: '../../../assets/distant-thunder.mp3',
+  fan:     '../../../assets/ceiling-fan.mp3',
+  city:    '../../../assets/city-at-night.mp3',
 };
 const mixAudio = {};
 const mixState = {};
@@ -2658,7 +2658,7 @@ function launchGame() {
   const frame = document.getElementById('gameFrame');
   cover.classList.add('hidden');
   frame.style.display = 'block';
-  frame.src = 'road-dreams.html';
+  frame.src = '../../../assets/road-dreams.html';
   showToast('The road remembers you — good luck');
 }
 
@@ -2700,5 +2700,33 @@ function launchGame() {
 })();
 
 </script>
+
+<!-- THEME SWITCHER -->
+<style>
+.ts{position:fixed;bottom:22px;right:22px;z-index:9999;font-family:sans-serif;}
+.ts-btn{background:rgba(0,0,0,0.7);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:11px;padding:8px 14px;border-radius:20px;cursor:pointer;letter-spacing:.05em;transition:all .2s;}
+.ts-btn:hover{background:rgba(255,255,255,0.15);}
+.ts-panel{display:none;position:absolute;bottom:42px;right:0;background:rgba(10,10,10,0.95);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:12px;min-width:190px;flex-direction:column;gap:6px;}
+.ts-panel.open{display:flex;}
+.ts-panel-title{font-size:9px;color:rgba(255,255,255,0.4);letter-spacing:.12em;margin-bottom:2px;}
+.ts-opt{display:flex;align-items:center;gap:9px;padding:7px 9px;border-radius:6px;cursor:pointer;text-decoration:none;border:1px solid transparent;transition:background .15s;}
+.ts-opt:hover{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.12);}
+.ts-opt.on{background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.2);}
+.ts-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.ts-lbl{font-size:11px;color:rgba(255,255,255,0.8);}
+.ts-sub{font-size:9px;color:rgba(255,255,255,0.35);display:block;margin-top:1px;}
+</style>
+<div class="ts">
+  <div class="ts-panel" id="tsP">
+    <div class="ts-panel-title">&#9670; CHOOSE THEME</div>
+    <a class="ts-opt" href="/src/index.html"><span class="ts-dot" style="background:#00ff6a;box-shadow:0 0 5px #00ff6a;"></span><span class="ts-lbl">Ghibli Forest<span class="ts-sub">neon green · pixel</span></span></a>
+    <a class="ts-opt  on" href="/src/themes/4/index.html"><span class="ts-dot" style="background:#d4a853;box-shadow:0 0 5px #d4a853;"></span><span class="ts-lbl">Lofi Den<span class="ts-sub">warm gold · ambient</span></span></a>
+    <a class="ts-opt" href="/src/themes/2/index.html"><span class="ts-dot" style="background:#d4af37;box-shadow:0 0 5px #d4af37;"></span><span class="ts-lbl">Iron Man<span class="ts-sub">red &amp; gold · stark</span></span></a>
+    <a class="ts-opt" href="/src/themes/3/index.html"><span class="ts-dot" style="background:#5c7a5c;box-shadow:0 0 5px #5c7a5c;"></span><span class="ts-lbl">Doctor Doom<span class="ts-sub">dark &amp; brooding</span></span></a>
+  </div>
+  <button class="ts-btn" onclick="document.getElementById('tsP').classList.toggle('open')">&#9775; Theme</button>
+</div>
+<script>document.addEventListener('click',function(e){if(!e.target.closest('.ts'))document.getElementById('tsP').classList.remove('open');});</script>
+
 </body>
 </html>
