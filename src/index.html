@@ -1960,5 +1960,126 @@ document.addEventListener("DOMContentLoaded", function() {
 }); // DOMContentLoaded
 
 </script>
+
+<!-- ═══════════════════════════════════════
+     THEME SWITCHER — bottom right corner
+═══════════════════════════════════════ -->
+<style>
+.theme-switcher{
+  position:fixed;bottom:24px;right:24px;z-index:9999;
+  display:flex;flex-direction:column;align-items:flex-end;gap:10px;
+}
+.theme-toggle-btn{
+  background:rgba(0,255,106,0.12);
+  border:1px solid rgba(0,255,106,0.35);
+  backdrop-filter:blur(12px);
+  color:var(--neon);
+  font-family:'Press Start 2P',monospace;
+  font-size:7px;
+  padding:10px 14px;
+  border-radius:8px;
+  cursor:pointer;
+  letter-spacing:.08em;
+  transition:all .2s;
+  display:flex;align-items:center;gap:8px;
+}
+.theme-toggle-btn:hover{
+  background:rgba(0,255,106,0.22);
+  border-color:rgba(0,255,106,0.7);
+  box-shadow:0 0 18px rgba(0,255,106,0.25);
+  transform:translateY(-2px);
+}
+.theme-panel{
+  display:none;
+  flex-direction:column;gap:8px;
+  background:rgba(6,12,7,0.92);
+  border:1px solid rgba(0,255,106,0.25);
+  border-radius:10px;
+  padding:14px 12px;
+  backdrop-filter:blur(16px);
+  min-width:180px;
+}
+.theme-panel.open{display:flex;}
+.theme-panel-title{
+  font-family:'Press Start 2P',monospace;
+  font-size:7px;color:rgba(0,255,106,0.55);
+  letter-spacing:.1em;margin-bottom:4px;
+}
+.theme-option{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 10px;border-radius:6px;
+  cursor:pointer;text-decoration:none;
+  transition:background .18s;
+  border:1px solid transparent;
+}
+.theme-option:hover{
+  background:rgba(255,255,255,0.06);
+  border-color:rgba(255,255,255,0.1);
+}
+.theme-option.active{
+  background:rgba(0,255,106,0.1);
+  border-color:rgba(0,255,106,0.3);
+}
+.theme-dot{
+  width:11px;height:11px;border-radius:50%;flex-shrink:0;
+  box-shadow:0 0 6px currentColor;
+}
+.theme-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;color:rgba(245,240,226,0.85);
+  white-space:nowrap;
+}
+.theme-sub{
+  font-size:9px;color:rgba(245,240,226,0.4);
+  margin-top:1px;display:block;
+}
+</style>
+
+<div class="theme-switcher">
+  <div class="theme-panel" id="themePanel">
+    <div class="theme-panel-title">&#9670; CHOOSE THEME</div>
+    <a class="theme-option active" href="/src/index.html">
+      <span class="theme-dot" style="color:#00ff6a;background:#00ff6a;"></span>
+      <span class="theme-label">Ghibli Forest<span class="theme-sub">neon green · pixel</span></span>
+    </a>
+    <a class="theme-option" href="/src/themes/4/index.html">
+      <span class="theme-dot" style="color:#d4a853;background:#d4a853;"></span>
+      <span class="theme-label">Lofi Den<span class="theme-sub">warm gold · ambient</span></span>
+    </a>
+    <a class="theme-option" href="/src/themes/2/index.html">
+      <span class="theme-dot" style="color:#d4af37;background:#d4af37;"></span>
+      <span class="theme-label">Iron Man<span class="theme-sub">red &amp; gold · stark</span></span>
+    </a>
+    <a class="theme-option" href="/src/themes/3/index.html">
+      <span class="theme-dot" style="color:#5c7a5c;background:#5c7a5c;"></span>
+      <span class="theme-label">Doctor Doom<span class="theme-sub">dark &amp; brooding</span></span>
+    </a>
+  </div>
+  <button class="theme-toggle-btn" onclick="document.getElementById('themePanel').classList.toggle('open')" title="Switch theme">
+    &#9775; THEME
+  </button>
+</div>
+
+<script>
+// Close panel when clicking outside
+document.addEventListener('click', function(e){
+  var panel = document.getElementById('themePanel');
+  var btn = e.target.closest('.theme-toggle-btn');
+  if (!btn && !e.target.closest('.theme-panel')) {
+    panel.classList.remove('open');
+  }
+});
+// Mark active theme
+(function(){
+  var path = window.location.pathname;
+  document.querySelectorAll('.theme-option').forEach(function(a){
+    a.classList.remove('active');
+    if(path === a.getAttribute('href') || (path.endsWith('/') && a.getAttribute('href') === '/src/index.html')) {
+      a.classList.add('active');
+    }
+  });
+})();
+</script>
+
 </body>
 </html>
