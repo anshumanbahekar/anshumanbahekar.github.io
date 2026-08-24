@@ -3692,5 +3692,91 @@ function closeEasterEgg() {
 })();
 </script>
 
+
+<!-- THEME SWITCHER -->
+<style>
+.ts{position:fixed;bottom:22px;right:22px;z-index:9999;font-family:sans-serif;}
+.ts-btn{background:rgba(180,0,0,0.75);border:1px solid rgba(255,100,0,0.4);color:#ffd700;font-size:11px;padding:8px 14px;border-radius:20px;cursor:pointer;letter-spacing:.05em;transition:all .2s;font-weight:700;}
+.ts-btn:hover{background:rgba(220,20,20,0.9);box-shadow:0 0 12px rgba(255,100,0,0.4);}
+.ts-panel{display:none;position:absolute;bottom:44px;right:0;background:rgba(10,5,5,0.96);border:1px solid rgba(255,100,0,0.25);border-radius:10px;padding:12px;min-width:190px;flex-direction:column;gap:6px;}
+.ts-panel.open{display:flex;}
+.ts-panel-title{font-size:9px;color:rgba(255,150,0,0.5);letter-spacing:.12em;margin-bottom:2px;text-transform:uppercase;}
+.ts-opt{display:flex;align-items:center;gap:9px;padding:7px 9px;border-radius:6px;cursor:pointer;text-decoration:none;border:1px solid transparent;transition:background .15s;}
+.ts-opt:hover{background:rgba(255,255,255,0.06);border-color:rgba(255,100,0,0.2);}
+.ts-opt.on{background:rgba(255,100,0,0.1);border-color:rgba(255,100,0,0.35);}
+.ts-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.ts-lbl{font-size:11px;color:rgba(255,255,255,0.8);}
+.ts-sub{font-size:9px;color:rgba(255,255,255,0.35);display:block;margin-top:1px;}
+</style>
+<div class="ts">
+  <div class="ts-panel" id="tsP">
+    <div class="ts-panel-title">&#9670; Choose Theme</div>
+    <a class="ts-opt" href="/"><span class="ts-dot" style="background:#00ff6a;box-shadow:0 0 5px #00ff6a;"></span><span class="ts-lbl">Ghibli Forest<span class="ts-sub">neon green · pixel</span></span></a>
+    <a class="ts-opt" href="/themes/4/index.html"><span class="ts-dot" style="background:#d4a853;box-shadow:0 0 5px #d4a853;"></span><span class="ts-lbl">Lofi Den<span class="ts-sub">warm gold · ambient</span></span></a>
+    <a class="ts-opt on" href="/themes/2/index.html"><span class="ts-dot" style="background:#d4af37;box-shadow:0 0 5px #d4af37;"></span><span class="ts-lbl">Iron Man<span class="ts-sub">red &amp; gold · stark</span></span></a>
+    <a class="ts-opt" href="/themes/3/index.html"><span class="ts-dot" style="background:#5c7a5c;box-shadow:0 0 5px #5c7a5c;"></span><span class="ts-lbl">Doctor Doom<span class="ts-sub">dark &amp; brooding</span></span></a>
+  </div>
+  <button class="ts-btn" onclick="document.getElementById('tsP').classList.toggle('open')">&#9775; Theme</button>
+</div>
+<script>document.addEventListener('click',function(e){if(!e.target.closest('.ts'))document.getElementById('tsP').classList.remove('open');});</script>
+
+<script>
+/* ═══ BACKGROUND AMBIENT MUSIC — cross-theme persistent ═══ */
+(function() {
+  const bgTracks = ['../../assets/song1.mp3', '../../assets/song2.mp3'];
+  const BG_KEY   = 'bgMusicState';
+  let bgStarted  = false;
+  const bgAudio  = new Audio();
+  bgAudio.volume = 0.22;
+
+  function bgSaveState() {
+    try {
+      localStorage.setItem(BG_KEY, JSON.stringify({
+        idx: bgAudio._trackIdx || 0,
+        time: bgAudio.currentTime,
+        ts: Date.now()
+      }));
+    } catch(e) {}
+  }
+  setInterval(bgSaveState, 1000);
+  window.addEventListener('pagehide',     bgSaveState);
+  window.addEventListener('beforeunload', bgSaveState);
+
+  function bgPlay(idx, fromTime) {
+    bgAudio._trackIdx   = idx;
+    bgAudio.src         = bgTracks[idx % bgTracks.length];
+    bgAudio.currentTime = fromTime || 0;
+    bgAudio.play().catch(() => {});
+  }
+  bgAudio.addEventListener('ended', () => {
+    bgPlay(((bgAudio._trackIdx || 0) + 1) % bgTracks.length, 0);
+  });
+
+  function startBg() {
+    if (bgStarted) return;
+    bgStarted = true;
+    try {
+      const saved = JSON.parse(localStorage.getItem(BG_KEY) || 'null');
+      if (saved) {
+        const elapsed = (Date.now() - saved.ts) / 1000;
+        const tmp = new Audio(bgTracks[saved.idx % bgTracks.length]);
+        tmp.addEventListener('loadedmetadata', () => {
+          const dur = tmp.duration || 180;
+          let t = saved.time + elapsed, i = saved.idx;
+          while (t > dur) { t -= dur; i = (i + 1) % bgTracks.length; }
+          bgPlay(i, t);
+        });
+        tmp.load();
+        return;
+      }
+    } catch(e) {}
+    bgPlay(0, 0);
+  }
+
+  document.addEventListener('click',      startBg, { once: true });
+  document.addEventListener('touchstart', startBg, { once: true });
+})();
+</script>
+
 </body>
 </html>
