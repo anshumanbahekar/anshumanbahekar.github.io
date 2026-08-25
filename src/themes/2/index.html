@@ -1892,6 +1892,99 @@
   #vc-time { font-family:'Oswald',sans-serif; font-size:9px; color:rgba(255,215,0,0.5); letter-spacing:0.06em; white-space:nowrap; }
   #vc-vol { font-size:11px; cursor:pointer; color:rgba(255,215,0,0.6); background:none; border:none; padding:2px 4px; font-family:monospace; }
 
+
+  /* ═══ MUSIC TOGGLE BUTTON ═══ */
+  #music-toggle-btn {
+    position: fixed;
+    bottom: 178px; right: 28px;
+    z-index: 500;
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: #FFD700; background: #0a0000;
+    border: 1px solid rgba(255,215,0,0.4);
+    padding: 9px 14px; cursor: pointer;
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+    transition: all 0.2s;
+    display: flex; align-items: center; gap: 7px;
+  }
+  #music-toggle-btn:hover {
+    background: rgba(255,215,0,0.1);
+    border-color: #FFD700;
+  }
+  #music-toggle-btn.playing {
+    border-color: #FFD700;
+    color: #FFD700;
+    animation: humPulse 2s ease-in-out infinite;
+  }
+  #music-toggle-btn.muted {
+    border-color: rgba(255,215,0,0.2);
+    color: rgba(255,215,0,0.4);
+  }
+  .music-icon {
+    font-size: 12px;
+    line-height: 1;
+  }
+  .music-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 12px;
+  }
+  .music-bar {
+    width: 2px;
+    background: #FFD700;
+    border-radius: 1px;
+    animation: musicBarAnim 0.8s ease-in-out infinite;
+  }
+  .music-bar:nth-child(1) { height: 40%; animation-delay: 0s; }
+  .music-bar:nth-child(2) { height: 100%; animation-delay: 0.15s; }
+  .music-bar:nth-child(3) { height: 60%; animation-delay: 0.3s; }
+  .music-bar:nth-child(4) { height: 80%; animation-delay: 0.1s; }
+  #music-toggle-btn.muted .music-bar { animation: none; height: 30% !important; opacity: 0.3; }
+  @keyframes musicBarAnim {
+    0%,100% { transform: scaleY(0.4); }
+    50%      { transform: scaleY(1); }
+  }
+  #music-vol-wrap {
+    position: fixed;
+    bottom: 178px; right: 148px;
+    z-index: 500;
+    background: #0a0000;
+    border: 1px solid rgba(255,215,0,0.3);
+    padding: 8px 12px;
+    display: none;
+    align-items: center;
+    gap: 10px;
+    clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+  }
+  #music-vol-wrap.visible { display: flex; }
+  #music-vol-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 9px; font-weight: 700;
+    letter-spacing: 0.12em; color: rgba(255,215,0,0.5);
+    text-transform: uppercase; white-space: nowrap;
+  }
+  #music-vol-slider {
+    -webkit-appearance: none;
+    width: 80px; height: 3px;
+    background: rgba(255,215,0,0.2);
+    border-radius: 2px; outline: none; cursor: pointer;
+  }
+  #music-vol-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #FFD700;
+    cursor: pointer;
+  }
+  #music-track-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 9px; letter-spacing: 0.1em;
+    color: rgba(255,215,0,0.35);
+    text-transform: uppercase; white-space: nowrap;
+  }
+
 </style>
 </head>
 <body>
@@ -3723,18 +3816,23 @@ function closeEasterEgg() {
 <script>
 /* ═══ BACKGROUND AMBIENT MUSIC — cross-theme persistent ═══ */
 (function() {
-  const bgTracks = ['../../assets/song1.mp3', '../../assets/song2.mp3'];
-  const BG_KEY   = 'bgMusicState';
-  let bgStarted  = false;
-  const bgAudio  = new Audio();
-  bgAudio.volume = 0.22;
+  const bgTracks  = ['../../assets/song1.mp3', '../../assets/song2.mp3'];
+  const BG_KEY    = 'bgMusicState';
+  const BG_MUTE   = 'bgMusicMuted';
+  let bgStarted   = false;
+  const bgAudio   = new Audio();
+  bgAudio.volume  = 0.22;
+
+  // Restore muted state
+  let isMuted = localStorage.getItem(BG_MUTE) === 'true';
+  bgAudio.volume = isMuted ? 0 : 0.22;
 
   function bgSaveState() {
     try {
       localStorage.setItem(BG_KEY, JSON.stringify({
-        idx: bgAudio._trackIdx || 0,
+        idx:  bgAudio._trackIdx || 0,
         time: bgAudio.currentTime,
-        ts: Date.now()
+        ts:   Date.now()
       }));
     } catch(e) {}
   }
@@ -3747,9 +3845,11 @@ function closeEasterEgg() {
     bgAudio.src         = bgTracks[idx % bgTracks.length];
     bgAudio.currentTime = fromTime || 0;
     bgAudio.play().catch(() => {});
+    updateTrackLabel(idx);
   }
   bgAudio.addEventListener('ended', () => {
-    bgPlay(((bgAudio._trackIdx || 0) + 1) % bgTracks.length, 0);
+    const next = ((bgAudio._trackIdx || 0) + 1) % bgTracks.length;
+    bgPlay(next, 0);
   });
 
   function startBg() {
@@ -3767,16 +3867,92 @@ function closeEasterEgg() {
           bgPlay(i, t);
         });
         tmp.load();
+        updateBtn();
         return;
       }
     } catch(e) {}
     bgPlay(0, 0);
+    updateBtn();
   }
+
+  function updateBtn() {
+    const btn = document.getElementById('music-toggle-btn');
+    if (!btn) return;
+    if (isMuted) {
+      btn.classList.remove('playing');
+      btn.classList.add('muted');
+      btn.querySelector('.music-label').textContent = 'Music Off';
+    } else {
+      btn.classList.remove('muted');
+      btn.classList.add('playing');
+      btn.querySelector('.music-label').textContent = 'Music On';
+    }
+  }
+
+  function updateTrackLabel(idx) {
+    const el = document.getElementById('music-track-label');
+    if (el) el.textContent = 'Track ' + (idx + 1) + ' / ' + bgTracks.length;
+  }
+
+  // Exposed globally
+  window.toggleBgMusic = function() {
+    if (!bgStarted) { startBg(); isMuted = false; }
+    else {
+      isMuted = !isMuted;
+      bgAudio.volume = isMuted ? 0 : 0.22;
+      try { localStorage.setItem(BG_MUTE, isMuted); } catch(e) {}
+    }
+    updateBtn();
+    // toggle volume panel
+    const vw = document.getElementById('music-vol-wrap');
+    if (vw) vw.classList.toggle('visible', !isMuted);
+  };
+
+  window.setBgVolume = function(v) {
+    bgAudio.volume = parseFloat(v);
+    if (!isMuted) {
+      const slider = document.getElementById('music-vol-slider');
+      if (slider) slider.value = v;
+    }
+  };
+
+  window.bgMusicNext = function() {
+    if (!bgStarted) return;
+    bgPlay(((bgAudio._trackIdx || 0) + 1) % bgTracks.length, 0);
+  };
 
   document.addEventListener('click',      startBg, { once: true });
   document.addEventListener('touchstart', startBg, { once: true });
+
+  // Init button state on load
+  window.addEventListener('DOMContentLoaded', () => {
+    updateBtn();
+    const slider = document.getElementById('music-vol-slider');
+    if (slider) {
+      slider.value = 0.22;
+      slider.addEventListener('input', e => window.setBgVolume(e.target.value));
+    }
+  });
 })();
 </script>
+
+
+<!-- MUSIC TOGGLE BUTTON -->
+<div id="music-vol-wrap">
+  <span id="music-vol-label">Volume</span>
+  <input type="range" id="music-vol-slider" min="0" max="1" step="0.01" value="0.22" />
+  <span id="music-track-label">Track 1 / 2</span>
+  <button onclick="bgMusicNext()" style="background:none;border:none;color:rgba(255,215,0,0.5);cursor:pointer;font-size:11px;font-family:'Oswald',sans-serif;letter-spacing:0.1em;padding:0 4px;" title="Next track">&#9654;&#9654;</button>
+</div>
+<button id="music-toggle-btn" class="muted" onclick="toggleBgMusic()">
+  <div class="music-bars">
+    <div class="music-bar"></div>
+    <div class="music-bar"></div>
+    <div class="music-bar"></div>
+    <div class="music-bar"></div>
+  </div>
+  <span class="music-label">Music Off</span>
+</button>
 
 </body>
 </html>
